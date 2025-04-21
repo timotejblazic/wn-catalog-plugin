@@ -1,0 +1,14 @@
+name: 'tb.catalog::lang.models.product.label'
+form: $/tb/catalog/models/product/fields.yaml
+modelClass: Tb\Catalog\Models\Product
+defaultRedirect: tb/catalog/products
+create:
+    title: backend::lang.form.create_title
+    redirect: tb/catalog/products/update/:id
+    redirectClose: tb/catalog/products
+update:
+    title: backend::lang.form.update_title
+    redirect: tb/catalog/products
+    redirectClose: tb/catalog/products
+preview:
+    title: backend::lang.form.preview_title

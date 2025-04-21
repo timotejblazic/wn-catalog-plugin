@@ -1,0 +1,42 @@
+fields:
+    title:
+        label: 'tb.catalog::lang.models.general.title'
+        type: text
+        span: auto
+    slug:
+        label: 'tb.catalog::lang.models.general.slug'
+        type: text
+        span: auto
+        preset:
+            field: title
+            type: slug
+    base_price:
+        label: 'tb.catalog::lang.models.product.base_price'
+        type: number
+        span: auto
+    brand:
+        label: 'tb.catalog::lang.models.brand.label'
+        span: auto
+        type: relation
+        nameFrom: title
+        emptyOption: '-'
+    categories:
+        label: 'tb.catalog::lang.models.category.label'
+        span: auto
+        type: relation
+        select: title
+    pictures:
+        label: 'tb.catalog::lang.models.general.pictures'
+        span: auto
+        type: mediafinder
+        mode: image
+        prompt: 'Select an image'
+        imageWidth: 60
+        imageHeight: 60
+    description:
+        label: 'tb.catalog::lang.models.general.description'
+        type: richeditor
+    variants:
+        label: 'tb.catalog::lang.models.product_variant.label'
+        type: partial
+        path: $/tb/catalog/models/product/_field_product_variants.htm

@@ -1,0 +1,21 @@
+fields:
+    title:
+        label: Title
+        type: text
+    sku:
+        label: SKU
+        type: text
+    price:
+        label: Price
+        type: number
+        step: 0.01
+    stock:
+        label: Stock
+        type: number
+    weight:
+        label: Weight
+        type: number
+        step: 0.01
+    weight_type:
+        label: Weight Type
+        type: text

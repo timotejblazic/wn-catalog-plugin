@@ -1,0 +1,14 @@
+name: 'tb.catalog::lang.models.category.label'
+form: $/tb/catalog/models/category/fields.yaml
+modelClass: Tb\Catalog\Models\Category
+defaultRedirect: tb/catalog/categories
+create:
+    title: backend::lang.form.create_title
+    redirect: tb/catalog/categories/update/:id
+    redirectClose: tb/catalog/categories
+update:
+    title: backend::lang.form.update_title
+    redirect: tb/catalog/categories
+    redirectClose: tb/catalog/categories
+preview:
+    title: backend::lang.form.preview_title

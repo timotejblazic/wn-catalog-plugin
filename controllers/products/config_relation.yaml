@@ -1,0 +1,8 @@
+variants:
+    label: Product Variant
+    manage:
+        form: $/tb/catalog/models/productvariant/fields.yaml
+        list: $/tb/catalog/models/productvariant/columns.yaml
+    view:
+        list: $/tb/catalog/models/productvariant/columns.yaml
+        toolbarButtons: create|delete

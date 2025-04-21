@@ -1,0 +1,20 @@
+list: $/tb/catalog/models/category/columns.yaml
+modelClass: Tb\Catalog\Models\Category
+title: 'tb.catalog::lang.models.category.label_plural'
+recordUrl: tb/catalog/categories/update/:id
+noRecordsMessage: backend::lang.list.no_records
+recordsPerPage: 20
+perPageOptions: [20, 40, 80, 100, 120]
+showPageNumbers: true
+showSetup: true
+showTree: true
+treeExpanded: true
+showCheckboxes: true
+# Default sorting column
+# defaultSort:
+#     column: created_at
+#     direction: desc
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt

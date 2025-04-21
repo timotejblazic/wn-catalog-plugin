@@ -1,0 +1,31 @@
+columns:
+    id:
+        label: 'tb.catalog::lang.models.general.id'
+        searchable: true
+    title:
+        label: 'tb.catalog::lang.models.general.title'
+        searchable: true
+    slug:
+        label: 'tb.catalog::lang.models.general.slug'
+        searchable: true
+    description:
+        label: 'tb.catalog::lang.models.general.description'
+        searchable: false
+    created_at:
+        label: 'tb.catalog::lang.models.general.created_at'
+        type: datetime
+        searchable: true
+        sortable: true
+        invisible: true
+    updated_at:
+        label: 'tb.catalog::lang.models.general.updated_at'
+        type: datetime
+        searchable: true
+        sortable: true
+    actions:
+        label: 'tb.catalog::lang.models.general.actions'
+        type: partial
+        path: $/tb/catalog/models/category/_actions.htm
+        sortable: false
+        clickable: false
+        width: 180px

@@ -1,0 +1,15 @@
+fields:
+    title:
+        label: 'tb.catalog::lang.models.general.title'
+        type: text
+        span: auto
+    slug:
+        label: 'tb.catalog::lang.models.general.slug'
+        type: text
+        span: auto
+        preset:
+            field: title
+            type: slug
+    description:
+        label: 'tb.catalog::lang.models.general.description'
+        type: richeditor

@@ -1,0 +1,6 @@
+products:
+    label: 'tb.catalog::lang.models.product.label_plural'
+    view:
+        form: $/tb/catalog/models/product/fields.yaml
+        list: $/tb/catalog/models/product/columns.yaml
+        toolbarButtons: add|remove

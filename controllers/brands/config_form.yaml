@@ -1,0 +1,14 @@
+name: 'tb.catalog::lang.models.brand.label'
+form: $/tb/catalog/models/brand/fields.yaml
+modelClass: Tb\Catalog\Models\Brand
+defaultRedirect: tb/catalog/brands
+create:
+    title: backend::lang.form.create_title
+    redirect: tb/catalog/brands/update/:id
+    redirectClose: tb/catalog/brands
+update:
+    title: backend::lang.form.update_title
+    redirect: tb/catalog/brands
+    redirectClose: tb/catalog/brands
+preview:
+    title: backend::lang.form.preview_title

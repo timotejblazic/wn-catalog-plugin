@@ -1,2 +1,2 @@
 # wn-catalog-plugin
-catalog plugin by itself
+Catalog plugin for Winter CMS

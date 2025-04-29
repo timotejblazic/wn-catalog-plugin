@@ -1,0 +1,16 @@
+fields:
+    name:
+        label: 'tb.catalog::lang.models.general.name'
+        type: text
+        span: auto
+    code:
+        label: 'tb.catalog::lang.models.general.code'
+        type: text
+        span: auto
+        preset:
+            field: name
+            type: slug
+    items:
+        label: 'tb.catalog::lang.models.product_variant.label'
+        type: partial
+        path: $/tb/catalog/models/attribute/_field_attribute_items.htm

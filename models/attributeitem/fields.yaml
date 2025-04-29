@@ -1,0 +1,15 @@
+fields:
+    id:
+        label: 'tb.catalog::lang.models.general.id'
+        disabled: true
+    name:
+        label: 'tb.catalog::lang.models.general.name'
+        type: text
+        span: auto
+    code:
+        label: 'tb.catalog::lang.models.general.code'
+        type: text
+        span: auto
+        preset:
+            field: name
+            type: slug

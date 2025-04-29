@@ -82,6 +82,13 @@ class Plugin extends PluginBase
                         'icon'        => 'icon-sitemap',
                         'permissions' => ['tb.catalog.*'],
                         'order'       => 700,
+                    ],
+                    'attributes' => [
+                        'label'       => 'tb.catalog::lang.models.attribute.label_plural',
+                        'url'         => Backend::url('tb/catalog/attributes'),
+                        'icon'        => 'icon-info-circle',
+                        'permissions' => ['tb.catalog.*'],
+                        'order'       => 800,
                     ]
                 ]
             ],

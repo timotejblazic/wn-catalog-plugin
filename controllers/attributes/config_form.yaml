@@ -1,0 +1,14 @@
+name: 'tb.catalog::lang.models.attribute.label'
+form: $/tb/catalog/models/attribute/fields.yaml
+modelClass: Tb\Catalog\Models\Attribute
+defaultRedirect: tb/catalog/attributes
+create:
+    title: backend::lang.form.create_title
+    redirect: tb/catalog/attributes/update/:id
+    redirectClose: tb/catalog/attributes
+update:
+    title: backend::lang.form.update_title
+    redirect: tb/catalog/attributes
+    redirectClose: tb/catalog/attributes
+preview:
+    title: backend::lang.form.preview_title

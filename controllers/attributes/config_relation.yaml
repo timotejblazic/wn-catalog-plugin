@@ -1,0 +1,8 @@
+items:
+    label: Attribute item
+    manage:
+        form: $/tb/catalog/models/attributeitem/fields.yaml
+        list: $/tb/catalog/models/attributeitem/columns.yaml
+    view:
+        list: $/tb/catalog/models/attributeitem/columns.yaml
+        toolbarButtons: create|delete

@@ -19,6 +19,8 @@ return [
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'actions' => 'Actions',
+            'name' => 'Name',
+            'code' => 'Code',
         ],
         'product' => [
             'label' => 'Product',
@@ -37,6 +39,10 @@ return [
             'label' => 'Category',
             'label_plural' => 'Categories',
             'add_subcategory' => 'Add subcategory',
+        ],
+        'attribute' => [
+            'label' => 'Attribute',
+            'label_plural' => 'Attributes',
         ],
     ],
 ];

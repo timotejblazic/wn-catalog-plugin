@@ -12,3 +12,9 @@
 1.0.4:
     - 'Create Categories Table'
     - v1.0.4/create_categories_table.php
+1.0.5:
+    - 'Create Attributes Table'
+    - v1.0.5/create_attributes_table.php
+1.0.6:
+    - 'Create AttributeItems Table'
+    - v1.0.6/create_attribute_items_table.php

@@ -1,0 +1,21 @@
+columns:
+    id:
+        label: 'tb.catalog::lang.models.general.id'
+        searchable: true
+    name:
+        label: 'tb.catalog::lang.models.general.name'
+        searchable: true
+    code:
+        label: 'tb.catalog::lang.models.general.code'
+        searchable: true
+    created_at:
+        label: 'tb.catalog::lang.models.general.created_at'
+        type: datetime
+        searchable: true
+        sortable: true
+        invisible: true
+    updated_at:
+        label: 'tb.catalog::lang.models.general.updated_at'
+        type: datetime
+        searchable: true
+        sortable: true

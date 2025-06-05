@@ -8,7 +8,6 @@ columns:
     price:
         label: Price
         type: number
-        format: money
     stock:
         label: Stock
         type: number

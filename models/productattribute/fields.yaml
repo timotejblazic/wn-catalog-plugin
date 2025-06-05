@@ -1,0 +1,15 @@
+fields:
+    attribute_id:
+        label: 'Attribute'
+        type: dropdown
+        placeholder: -- select attribute --
+        span: auto
+    attribute_item_id:
+        label: 'Attribute item'
+        type: dropdown
+        dependsOn: attribute_id
+        span: auto
+    value:
+        label: 'Custom value'
+        type: text
+        span: auto

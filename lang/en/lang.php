@@ -31,6 +31,10 @@ return [
             'label' => 'Product variant',
             'label_plural' => 'Product variants',
         ],
+        'product_attribute' => [
+            'label' => 'Product attribute',
+            'label_plural' => 'Product attributes',
+        ],
         'brand' => [
             'label' => 'Brand',
             'label_plural' => 'Brands',

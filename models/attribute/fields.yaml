@@ -11,6 +11,6 @@ fields:
             field: name
             type: slug
     items:
-        label: 'tb.catalog::lang.models.product_variant.label'
+        label: 'tb.catalog::lang.models.attribute.label'
         type: partial
         path: $/tb/catalog/models/attribute/_field_attribute_items.htm

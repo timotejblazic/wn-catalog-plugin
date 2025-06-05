@@ -36,7 +36,11 @@ fields:
     description:
         label: 'tb.catalog::lang.models.general.description'
         type: richeditor
+    productattributes:
+        label: 'tb.catalog::lang.models.product_attribute.label_plural'
+        type: partial
+        path: $/tb/catalog/models/product/_field_product_attributes.htm
     variants:
-        label: 'tb.catalog::lang.models.product_variant.label'
+        label: 'tb.catalog::lang.models.product_variant.label_plural'
         type: partial
         path: $/tb/catalog/models/product/_field_product_variants.htm

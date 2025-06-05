@@ -1,0 +1,10 @@
+columns:
+    id:
+        label: 'tb.catalog::lang.models.general.id'
+        searchable: true
+    attribute_id:
+        relation: attribute
+        select: name
+    attribute_item_id:
+        relation: attributeItem
+        select: name

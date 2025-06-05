@@ -8,6 +8,10 @@ columns:
     code:
         label: 'tb.catalog::lang.models.general.code'
         searchable: true
+    items:
+        label: 'tb.catalog::lang.models.category.label'
+        relation: items
+        select: name
     created_at:
         label: 'tb.catalog::lang.models.general.created_at'
         type: datetime

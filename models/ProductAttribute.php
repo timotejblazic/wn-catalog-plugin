@@ -36,4 +36,14 @@ class ProductAttribute extends Model
 
         return $currentAttributeItems->pluck('name', 'id')->toArray();
     }
+
+    public function getAttTitle()
+    {
+        return Attribute::where('id', $this->attribute_id)->first()->name;
+    }
+
+    public function getAttValue()
+    {
+        return AttributeItem::where('id', $this->attribute_item_id)->first()->name;
+    }
 }

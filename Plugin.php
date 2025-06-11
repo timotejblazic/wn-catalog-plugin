@@ -32,10 +32,9 @@ class Plugin extends PluginBase
 
     public function registerComponents(): array
     {
-        return []; // Remove this line to activate
-
         return [
-            \Tb\Catalog\Components\MyComponent::class => 'myComponent',
+            \Tb\Catalog\Components\ProductList::class => 'productList',
+            \Tb\Catalog\Components\ProductSingle::class => 'productSingle',
         ];
     }
 
@@ -92,6 +91,17 @@ class Plugin extends PluginBase
                     ]
                 ]
             ],
+        ];
+    }
+
+    public function registerMarkupTags()
+    {
+        return [
+            'functions' => [
+                'dd' => function () {
+                    dd(...func_get_args());
+                },
+            ]
         ];
     }
 }

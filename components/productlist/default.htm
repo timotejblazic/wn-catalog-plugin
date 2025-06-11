@@ -1,0 +1,21 @@
+{% set products = __SELF__.products %}
+
+<div class="product-list">
+    {% if products.count %}
+        <ul>
+            {% for product in products %}
+                <li class="product-item">
+                    <h3>
+                        <a href="{{ 'productsingle'|page({ slug: product.slug }) }}">
+                            {{ product.title }}
+                        </a>
+                    </h3>
+                    <p>{{ product.description|raw }}</p>
+                    <p><strong>Price:</strong> {{ product.base_price }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No products found.</p>
+    {% endif %}
+</div>

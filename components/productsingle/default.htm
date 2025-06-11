@@ -1,0 +1,43 @@
+{% set product = __SELF__.product %}
+
+<div class="product-single">
+    <h1>{{ product.title }}</h1>
+    <p>{{ product.brand.title }}</p>
+    <p>{{ product.description|raw }}</p>
+    <p><strong>Price:</strong> {{ product.base_price }}</p>
+
+    {% if product.pictures %}
+        <div class="gallery">
+            {% for img in product.pictures %}
+                <img src="{{ img.path }}" alt="{{ product.name }}" />
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if product.variants.count %}
+        <h3>Variants</h3>
+        <ul>
+            {% for v in product.variants %}
+                <li>{{ v.title }} – {{ v.sku }} – {{ v.price }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if product.categories.count %}
+        <h3>Categories</h3>
+        <ul>
+            {% for c in product.categories %}
+                <li>{{ c.title }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if product.productattributes.count %}
+        <h3>Attributes</h3>
+        <ul>
+            {% for c in product.productattributes %}
+                <li>{{ c.attTitle }}-{{ c.attValue }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>

@@ -1,10 +1,13 @@
 <?php namespace Tb\Catalog\Models;
 
 use Winter\Storm\Database\Model;
+use \Winter\Storm\Database\Traits\Validation;
 
 class Product extends Model
 {
-    use \Winter\Storm\Database\Traits\Validation;
+    use Validation;
+
+    public $category;
 
     public $table = 'tb_catalog_products';
 

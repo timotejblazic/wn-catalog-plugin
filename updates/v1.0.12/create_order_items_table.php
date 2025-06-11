@@ -8,16 +8,16 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('tb_catalog_basket_items', function (Blueprint $table) {
+        Schema::create('tb_catalog_order_items', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('basket_id')->unsigned();
+            $table->integer('order_id')->unsigned();
             $table->integer('product_variant_id')->unsigned();
             $table->integer('quantity')->unsigned()->default(1);
             $table->decimal('unit_price', 10, 2);
             $table->timestamps();
 
-            $table->foreign('basket_id')
-                ->references('id')->on('tb_catalog_baskets')
+            $table->foreign('order_id')
+                ->references('id')->on('tb_catalog_orders')
                 ->onDelete('cascade');
             $table->foreign('product_variant_id')
                 ->references('id')->on('tb_catalog_product_variants')
@@ -27,6 +27,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('tb_catalog_basket_items');
+        Schema::dropIfExists('tb_catalog_order_items');
     }
 };

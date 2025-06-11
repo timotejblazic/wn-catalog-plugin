@@ -45,6 +45,7 @@ class Plugin extends PluginBase
             \Tb\Catalog\Components\AddToCart::class     => 'addToCart',
             \Tb\Catalog\Components\CartSummary::class   => 'cartSummary',
             \Tb\Catalog\Components\CartPage::class      => 'cartPage',
+            \Tb\Catalog\Components\CheckoutForm::class  => 'checkoutForm',
         ];
     }
 

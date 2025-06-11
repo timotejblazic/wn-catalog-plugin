@@ -1,0 +1,54 @@
+<div class="checkout-form">
+    <h2>Checkout</h2>
+
+    {% if cartItems.count %}
+        <h3>Order Summary</h3>
+        <ul>
+            {% for item in cartItems %}
+                <li>
+                    {{ item.variant.product.title }}
+                    ({{ item.variant.title }}) x {{ item.quantity }} =
+                    {{ (item.unit_price * item.quantity)|number_format(2,'.',',') }} €
+                </li>
+            {% endfor %}
+        </ul>
+        <p><strong>Total: </strong> {{ cartTotal|number_format(2,'.',',') }} €</p>
+
+        <h3>Shipping Information</h3>
+        <div>
+            <label>Name</label>
+            <input type="text" name="shipping_name" data-request-field="shipping_name" required>
+            <label>Street</label>
+            <input type="text" name="shipping_street" data-request-field="shipping_street" required>
+            <label>City</label>
+            <input type="text" name="shipping_city" data-request-field="shipping_city" required>
+            <label>ZIP</label>
+            <input type="text" name="shipping_zip" data-request-field="shipping_zip" required>
+            <label>Country</label>
+            <input type="text" name="shipping_country" data-request-field="shipping_country" required>
+        </div>
+
+        <h3>Billing Information</h3>
+        <div>
+            <label>Name</label>
+            <input type="text" name="billing_name" data-request-field="billing_name" required>
+            <label>Street</label>
+            <input type="text" name="billing_street" data-request-field="billing_street" required>
+            <label>City</label>
+            <input type="text" name="billing_city" data-request-field="billing_city" required>
+            <label>ZIP</label>
+            <input type="text" name="billing_zip" data-request-field="billing_zip" required>
+            <label>Country</label>
+            <input type="text" name="billing_country" data-request-field="billing_country" required>
+        </div>
+
+        <button type="button"
+                data-request="onPlaceOrder"
+                data-request-flash>
+            Place Order
+        </button>
+    {% else %}
+        <p>Your cart is empty.</p>
+        <p><a href="{{ 'products'|page }}">Continue Shopping</a></p>
+    {% endif %}
+</div>

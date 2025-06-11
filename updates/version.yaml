@@ -27,3 +27,12 @@
 1.0.9:
     - 'Create basket items table'
     - v1.0.9/create_basket_items_table.php
+1.0.10:
+    - 'Create order statuses table'
+    - v1.0.10/create_order_statuses_table.php
+1.0.11:
+    - 'Create orders table'
+    - v1.0.11/create_orders_table.php
+1.0.12:
+    - 'Create order items table'
+    - v1.0.12/create_order_items_table.php

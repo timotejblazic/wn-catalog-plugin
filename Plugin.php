@@ -1,11 +1,15 @@
 <?php namespace Tb\Catalog;
 
+use Event;
 use Backend;
 use Backend\Models\UserRole;
 use System\Classes\PluginBase;
+use Tb\Catalog\Services\CartManager;
 
 class Plugin extends PluginBase
 {
+    public $require = ['Winter.User'];
+
     public function pluginDetails(): array
     {
         return [
@@ -28,13 +32,19 @@ class Plugin extends PluginBase
      */
     public function boot(): void
     {
+        Event::listen('winter.user.login', function () {
+            (new CartManager())->mergeGuestCartIntoUser();
+        });
     }
 
     public function registerComponents(): array
     {
         return [
-            \Tb\Catalog\Components\ProductList::class => 'productList',
+            \Tb\Catalog\Components\ProductList::class   => 'productList',
             \Tb\Catalog\Components\ProductSingle::class => 'productSingle',
+            \Tb\Catalog\Components\AddToCart::class     => 'addToCart',
+            \Tb\Catalog\Components\CartSummary::class   => 'cartSummary',
+            \Tb\Catalog\Components\CartPage::class      => 'cartPage',
         ];
     }
 
@@ -61,14 +71,14 @@ class Plugin extends PluginBase
                 'permissions' => ['tb.catalog.*'],
                 'order'       => 500,
                 'sideMenu'    => [
-                    'products' => [
+                    'products'   => [
                         'label'       => 'tb.catalog::lang.models.product.label_plural',
                         'url'         => Backend::url('tb/catalog/products'),
                         'icon'        => 'icon-cubes',
                         'permissions' => ['tb.catalog.*'],
                         'order'       => 500,
                     ],
-                    'brands' => [
+                    'brands'     => [
                         'label'       => 'tb.catalog::lang.models.brand.label_plural',
                         'url'         => Backend::url('tb/catalog/brands'),
                         'icon'        => 'icon-copyright',

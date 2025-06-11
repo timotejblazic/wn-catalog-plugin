@@ -21,3 +21,9 @@
 1.0.7:
     - create_pivot_attribute_item_product
     - v1.0.7/create_pivot_attribute_item_product.php
+1.0.8:
+    - 'create baskets table'
+    - v1.0.8/create_baskets_table.php
+1.0.9:
+    - 'Create basket items table'
+    - v1.0.9/create_basket_items_table.php

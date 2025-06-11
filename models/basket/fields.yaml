@@ -1,0 +1,4 @@
+fields:
+    id:
+        label: 'tb.catalog::lang.models.general.id'
+        disabled: true

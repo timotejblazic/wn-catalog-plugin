@@ -5,8 +5,6 @@ use Tb\Catalog\Models\Product;
 
 class ProductSingle extends ComponentBase
 {
-    public $product;
-
     public function componentDetails()
     {
         return [
@@ -31,6 +29,6 @@ class ProductSingle extends ComponentBase
     {
         $slug = $this->param($this->property('slugParam'));
 
-        $this->product = Product::where('slug', $slug)->firstOrFail();
+        $this->page['product'] = Product::where('slug', $slug)->firstOrFail();
     }
 }

@@ -1,12 +1,10 @@
 <?php namespace Tb\Catalog\Components;
 
-use Cms\Classes\ComponentBase;
 use Tb\Catalog\Models\Product;
+use Cms\Classes\ComponentBase;
 
 class ProductList extends ComponentBase
 {
-    public $products;
-
     public function componentDetails()
     {
         return [
@@ -31,7 +29,7 @@ class ProductList extends ComponentBase
 
     public function onRun()
     {
-        $this->products = $this->loadProducts();
+        $this->page['products'] = $this->loadProducts();
     }
 
     protected function loadProducts()

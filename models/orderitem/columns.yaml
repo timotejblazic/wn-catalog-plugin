@@ -1,11 +1,11 @@
-# ===================================
-#  List Column Definitions
-# ===================================
-
 columns:
     id:
         label: 'tb.catalog::lang.models.general.id'
         searchable: true
+    variant_title:
+        label: 'Variant title'
+        relation: variant
+        select: title
     created_at:
         label: 'tb.catalog::lang.models.general.created_at'
         type: datetime

@@ -1,11 +1,29 @@
-# ===================================
-#  List Column Definitions
-# ===================================
-
 columns:
     id:
         label: 'tb.catalog::lang.models.general.id'
         searchable: true
+    basket_id:
+        label: 'Basket id'
+        type: text
+    status:
+        label: Status
+        relation: status
+        select: name
+        sortable: true
+    user:
+        label: Customer
+        relation: user
+        select: name
+    total_amount:
+        label: Total
+        type: number
+        format: "%0.2f"
+    shipping_address:
+        label: 'Shipping address'
+        type: text
+    billing_address:
+        label: 'Billing address'
+        type: text
     created_at:
         label: 'tb.catalog::lang.models.general.created_at'
         type: datetime

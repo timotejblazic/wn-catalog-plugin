@@ -1,8 +1,36 @@
-# ===================================
-#  Form Field Definitions
-# ===================================
-
 fields:
-    id:
-        label: 'tb.catalog::lang.models.general.id'
+    user:
+        label: Customer
+        type: relation
+        nameFrom: name
         disabled: true
+        span: auto
+    status:
+        label: Status
+        type: relation
+        nameFrom: name
+        disabled: true
+        span: auto
+    shipping_address:
+        label: Shipping Address
+        type: textarea
+        size: large
+        disabled: true
+        span: auto
+    billing_address:
+        label: Billing Address
+        type: textarea
+        size: large
+        disabled: true
+        span: auto
+    total_amount:
+        label: Total
+        type: number
+        disabled: true
+        span: auto
+tabs:
+    fields:
+        items:
+            label: Items
+            type: partial
+            path: $/tb/catalog/models/order/_field_order_items.htm

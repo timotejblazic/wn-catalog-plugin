@@ -1,0 +1,5 @@
+items:
+    label: Order items
+    view:
+        list: $/tb/catalog/models/orderitem/columns.yaml
+        toolbarButtons: create|delete

@@ -48,5 +48,9 @@ return [
             'label' => 'Attribute',
             'label_plural' => 'Attributes',
         ],
+        'order' => [
+            'label' => 'Order',
+            'label_plural' => 'Orders',
+        ],
     ],
 ];

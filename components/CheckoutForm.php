@@ -1,19 +1,17 @@
 <?php namespace Tb\Catalog\Components;
 
-use Cms\Classes\ComponentBase;
-use Illuminate\Support\Facades\Redirect;
 use Tb\Catalog\Models\Order;
+use Winter\User\Facades\Auth;
+use Cms\Classes\ComponentBase;
 use Tb\Catalog\Models\OrderItem;
 use Tb\Catalog\Models\OrderStatus;
 use Tb\Catalog\Services\CartManager;
 use Winter\Storm\Support\Facades\Flash;
 use Winter\Storm\Support\Facades\Input;
-use Winter\User\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class CheckoutForm extends ComponentBase
 {
-    public $errors = [];
-
     public function componentDetails()
     {
         return [
@@ -39,7 +37,6 @@ class CheckoutForm extends ComponentBase
         $cart = new CartManager();
         $this->page['cartItems'] = $cart->getItems();
         $this->page['cartTotal'] = $cart->getTotal();
-        $this->page['errors']   = $this->errors;
     }
 
     public function onPlaceOrder()
@@ -50,8 +47,6 @@ class CheckoutForm extends ComponentBase
         if ($items->isEmpty()) {
             return;
         }
-
-        // TODO: backend validation
 
         $status = OrderStatus::findByCode(OrderStatus::PENDING);
 

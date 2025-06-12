@@ -99,6 +99,13 @@ class Plugin extends PluginBase
                         'icon'        => 'icon-info-circle',
                         'permissions' => ['tb.catalog.*'],
                         'order'       => 800,
+                    ],
+                    'orders' => [
+                        'label'       => 'tb.catalog::lang.models.order.label_plural',
+                        'url'         => Backend::url('tb/catalog/orders'),
+                        'icon'        => 'icon-cart-arrow-down',
+                        'permissions' => ['tb.catalog.*'],
+                        'order'       => 900,
                     ]
                 ]
             ],

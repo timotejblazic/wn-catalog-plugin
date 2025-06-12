@@ -14,39 +14,45 @@
         </ul>
         <p><strong>Total: </strong> {{ cartTotal|number_format(2,'.',',') }} €</p>
 
-        <h3>Shipping Information</h3>
-        <div>
-            <label>Name</label>
-            <input type="text" name="shipping_name" data-request-field="shipping_name" required>
-            <label>Street</label>
-            <input type="text" name="shipping_street" data-request-field="shipping_street" required>
-            <label>City</label>
-            <input type="text" name="shipping_city" data-request-field="shipping_city" required>
-            <label>ZIP</label>
-            <input type="text" name="shipping_zip" data-request-field="shipping_zip" required>
-            <label>Country</label>
-            <input type="text" name="shipping_country" data-request-field="shipping_country" required>
-        </div>
+        <form data-request="onPlaceOrder" data-request-flash class="checkout-form">
+            <h3>Shipping Information</h3>
+            <div class="shipping-fields">
+                <label for="shipping_name">Name</label>
+                <input id="shipping_name" name="shipping_name" type="text">
 
-        <h3>Billing Information</h3>
-        <div>
-            <label>Name</label>
-            <input type="text" name="billing_name" data-request-field="billing_name" required>
-            <label>Street</label>
-            <input type="text" name="billing_street" data-request-field="billing_street" required>
-            <label>City</label>
-            <input type="text" name="billing_city" data-request-field="billing_city" required>
-            <label>ZIP</label>
-            <input type="text" name="billing_zip" data-request-field="billing_zip" required>
-            <label>Country</label>
-            <input type="text" name="billing_country" data-request-field="billing_country" required>
-        </div>
+                <label for="shipping_street">Street</label>
+                <input id="shipping_street" name="shipping_street" type="text">
 
-        <button type="button"
-                data-request="onPlaceOrder"
-                data-request-flash>
-            Place Order
-        </button>
+                <label for="shipping_city">City</label>
+                <input id="shipping_city" name="shipping_city" type="text">
+
+                <label for="shipping_zip">ZIP</label>
+                <input id="shipping_zip" name="shipping_zip" type="text">
+
+                <label for="shipping_country">Country</label>
+                <input id="shipping_country" name="shipping_country" type="text">
+            </div>
+
+            <h3>Billing Information</h3>
+            <div class="billing-fields">
+                <label for="billing_name">Name</label>
+                <input id="billing_name" name="billing_name" type="text">
+
+                <label for="billing_street">Street</label>
+                <input id="billing_street" name="billing_street" type="text">
+
+                <label for="billing_city">City</label>
+                <input id="billing_city" name="billing_city" type="text">
+
+                <label for="billing_zip">ZIP</label>
+                <input id="billing_zip" name="billing_zip" type="text">
+
+                <label for="billing_country">Country</label>
+                <input id="billing_country" name="billing_country" type="text">
+            </div>
+
+            <button type="submit">Place Order</button>
+        </form>
     {% else %}
         <p>Your cart is empty.</p>
         <p><a href="{{ 'products'|page }}">Continue Shopping</a></p>

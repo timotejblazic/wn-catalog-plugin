@@ -1,0 +1,14 @@
+name: 'tb.catalog::lang.models.order.label'
+form: $/tb/catalog/models/order/fields.yaml
+modelClass: Tb\Catalog\Models\Order
+defaultRedirect: tb/catalog/orders
+create:
+    title: backend::lang.form.create_title
+    redirect: tb/catalog/orders/update/:id
+    redirectClose: tb/catalog/orders
+update:
+    title: backend::lang.form.update_title
+    redirect: tb/catalog/orders
+    redirectClose: tb/catalog/orders
+preview:
+    title: backend::lang.form.preview_title

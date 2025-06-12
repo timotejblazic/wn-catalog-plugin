@@ -1,0 +1,18 @@
+list: $/tb/catalog/models/order/columns.yaml
+modelClass: Tb\Catalog\Models\Order
+title: 'tb.catalog::lang.models.order.label_plural'
+recordUrl: tb/catalog/orders/update/:id
+noRecordsMessage: backend::lang.list.no_records
+recordsPerPage: 20
+perPageOptions: [20, 40, 80, 100, 120]
+showPageNumbers: true
+showSetup: true
+showSorting: true
+defaultSort:
+    column: created_at
+    direction: desc
+showCheckboxes: true
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt

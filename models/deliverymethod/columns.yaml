@@ -1,0 +1,26 @@
+columns:
+    id:
+        label: 'tb.catalog::lang.models.general.id'
+        searchable: true
+    name:
+        label: 'tb.catalog::lang.models.general.name'
+        searchable: true
+    cost:
+        label: 'tb.catalog::lang.models.deliverymethod.cost'
+        type: number
+        format: "%0.2f"
+    min_weight:
+        label: 'tb.catalog::lang.models.deliverymethod.min_weight'
+    free_over_amount:
+        label: 'tb.catalog::lang.models.deliverymethod.free_over'
+    created_at:
+        label: 'tb.catalog::lang.models.general.created_at'
+        type: datetime
+        searchable: true
+        sortable: true
+        invisible: true
+    updated_at:
+        label: 'tb.catalog::lang.models.general.updated_at'
+        type: datetime
+        searchable: true
+        sortable: true

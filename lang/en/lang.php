@@ -63,5 +63,12 @@ return [
             'times_used' => 'Times used',
             'expires_at' => 'Expires at',
         ],
+        'deliverymethod' => [
+            'label' => 'Delivery Method',
+            'label_plural' => 'Delivery Methods',
+            'cost' => 'Base cost',
+            'min_weight' => 'Min weight (kg)',
+            'free_over' => 'Free over (€)',
+        ],
     ],
 ];

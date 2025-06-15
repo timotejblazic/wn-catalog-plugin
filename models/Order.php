@@ -19,7 +19,9 @@ class Order extends Model
         'discount_amount',
         'total_amount',
         'shipping_address',
-        'billing_address'
+        'billing_address',
+        'delivery_method_id',
+        'shipping_cost',
     ];
 
     public $rules = [];
@@ -49,7 +51,11 @@ class Order extends Model
         'coupon' => [
             Coupon::class,
             'key' => 'coupon_id'
-        ]
+        ],
+        'deliveryMethod' => [
+            DeliveryMethod::class,
+            'key'=>'delivery_method_id'
+        ],
     ];
 
     public $hasMany = [

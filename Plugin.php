@@ -114,7 +114,14 @@ class Plugin extends PluginBase
                         'icon'        => 'icon-ticket',
                         'permissions' => ['tb.catalog.*'],
                         'order'       => 1000,
-                    ]
+                    ],
+                    'delivery' => [
+                        'label'       => 'tb.catalog::lang.models.deliverymethod.label_plural',
+                        'url'         => Backend::url('tb/catalog/deliverymethods'),
+                        'icon'        => 'icon-truck',
+                        'permissions' => ['tb.catalog.*'],
+                        'order'       => 1100,
+                    ],
                 ]
             ],
         ];

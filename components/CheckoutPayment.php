@@ -3,6 +3,7 @@
 use Cms\Classes\ComponentBase;
 use Illuminate\Support\Facades\Redirect;
 use Tb\Catalog\Models\Coupon;
+use Tb\Catalog\Models\DeliveryMethod;
 use Tb\Catalog\Services\CartManager;
 use Tb\Catalog\Services\DiscountService;
 use Tb\Catalog\Services\PaymentManager;
@@ -40,6 +41,7 @@ class CheckoutPayment extends ComponentBase
         $this->page['cartItems'] = $cart->getItems();
         $this->page['cartTotal'] = $cart->getTotal();
         $this->page['paymentMethods'] = array_keys(config('payment.drivers'));
+        $this->page['deliveryMethods'] = DeliveryMethod::all();
     }
 
     public function onPlaceOrder()
@@ -57,24 +59,32 @@ class CheckoutPayment extends ComponentBase
         $couponCode = trim(post('coupon_code'));
         $discountData = (new DiscountService())->calculate($cart->getItems(), $total, $couponCode);
 
+        // Increment coupon usage
         if ($couponCode) {
             $coupon = Coupon::where('code', $couponCode)->first();
-            $coupon ?? $coupon->markUsed();
+                $coupon ?? $coupon->markUsed();
         }
 
+        // Discount data
         $discountAmount = $discountData['totalDiscount'];
         $breakdown = $discountData['breakdown'];
 
+        // Delivery method - calculate cost
+        $deliveryMethodId = post('delivery_method_id');
+        $shippingCost = DeliveryMethod::find($deliveryMethodId)->calculateCost($total - $discountAmount);
+
         $status = OrderStatus::findByCode(OrderStatus::PENDING);
         $order = Order::create([
-            'basket_id'        => $cart->getBasket()->id,
-            'user_id'          => optional(Auth::getUser())->id,
-            'status_id'        => $status->id,
-            'coupon_id'        => isset($coupon) ? $coupon->id : null,
-            'total_amount'     => $total - $discountAmount,
-            'discount_amount'  => $discountAmount,
-            'shipping_address' => json_encode(post('shipping')),
-            'billing_address'  => json_encode(post('billing')),
+            'basket_id'          => $cart->getBasket()->id,
+            'user_id'            => optional(Auth::getUser())->id,
+            'status_id'          => $status->id,
+            'coupon_id'          => isset($coupon) ? $coupon->id : null,
+            'total_amount'       => $total - $discountAmount + $shippingCost,
+            'discount_amount'    => $discountAmount,
+            'shipping_address'   => json_encode(post('shipping')),
+            'billing_address'    => json_encode(post('billing')),
+            'delivery_method_id' => $deliveryMethodId,
+            'shipping_cost'      => $shippingCost,
         ]);
 
         foreach ($items as $item) {

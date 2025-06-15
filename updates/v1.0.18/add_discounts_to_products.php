@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::table('tb_catalog_products', function(Blueprint $table) {
+        Schema::table('tb_catalog_products', function (Blueprint $table) {
             $table->string('discount_type')->nullable()->after('base_price');
             $table->decimal('discount_value', 10, 2)->nullable()->after('discount_type');
         });
@@ -16,7 +16,7 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::table('tb_catalog_products', function(Blueprint $table) {
+        Schema::table('tb_catalog_products', function (Blueprint $table) {
             $table->dropColumn(['discount_type','discount_value']);
         });
     }

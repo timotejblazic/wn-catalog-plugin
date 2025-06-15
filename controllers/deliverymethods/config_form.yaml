@@ -1,0 +1,14 @@
+name: 'tb.catalog::lang.models.deliverymethod.label'
+form: $/tb/catalog/models/deliverymethod/fields.yaml
+modelClass: Tb\Catalog\Models\DeliveryMethod
+defaultRedirect: tb/catalog/deliverymethods
+create:
+    title: backend::lang.form.create_title
+    redirect: tb/catalog/deliverymethods/update/:id
+    redirectClose: tb/catalog/deliverymethods
+update:
+    title: backend::lang.form.update_title
+    redirect: tb/catalog/deliverymethods
+    redirectClose: tb/catalog/deliverymethods
+preview:
+    title: backend::lang.form.preview_title

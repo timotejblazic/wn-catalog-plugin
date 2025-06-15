@@ -54,3 +54,9 @@
 1.0.18:
     - 'Add discounts to products'
     - v1.0.18/add_discounts_to_products.php
+1.0.19:
+    - 'Create delivery methods table'
+    - v1.0.19/create_delivery_methods_table.php
+1.0.20:
+    - 'Add delivery to orders'
+    - v1.0.20/add_delivery_to_orders.php

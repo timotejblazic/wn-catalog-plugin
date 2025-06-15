@@ -15,6 +15,15 @@
         <form id="checkout-form"
               data-request="checkoutPayment::onPlaceOrder"
               data-request-flash>
+            <h4>Delivery Method</h4>
+            <select name="delivery_method_id">
+                {% for dm in deliveryMethods %}
+                    <option value="{{ dm.id }}">{{ dm.name }} —
+                        €{{ dm.cost|number_format(2,'.',',') }}
+                    </option>
+                {% endfor %}
+            </select>
+
             <h4>Shipping Information</h4>
             <input type="text" name="shipping[name]" placeholder="Name">
             <input type="text" name="shipping[street]" placeholder="Street">

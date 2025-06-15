@@ -20,6 +20,15 @@ fields:
         type: relation
         nameFrom: title
         emptyOption: '-'
+    discount_type:
+        label: 'tb.catalog::lang.models.product.discount_type'
+        type: dropdown
+        span: auto
+    discount_value:
+        label: 'tb.catalog::lang.models.product.discount_value'
+        type: number
+        step: 0.01
+        span: auto
     categories:
         label: 'tb.catalog::lang.models.category.label'
         span: auto

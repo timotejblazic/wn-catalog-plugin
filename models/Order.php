@@ -10,7 +10,17 @@ class Order extends Model
 
     public $table = 'tb_catalog_orders';
 
-    protected $fillable = ['basket_id', 'user_id', 'status_id', 'payment_status_id', 'total_amount', 'shipping_address', 'billing_address'];
+    protected $fillable = [
+        'basket_id',
+        'user_id',
+        'status_id',
+        'payment_status_id',
+        'coupon_id',
+        'discount_amount',
+        'total_amount',
+        'shipping_address',
+        'billing_address'
+    ];
 
     public $rules = [];
 
@@ -24,7 +34,7 @@ class Order extends Model
             Basket::class,
             'key' => 'basket_id'
         ],
-        'user'   => [
+        'user' => [
             User::class,
             'key' => 'user_id'
         ],
@@ -35,6 +45,10 @@ class Order extends Model
         'paymentStatus' => [
             PaymentStatus::class,
             'key' => 'payment_status_id'
+        ],
+        'coupon' => [
+            Coupon::class,
+            'key' => 'coupon_id'
         ]
     ];
 

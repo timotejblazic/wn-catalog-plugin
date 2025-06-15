@@ -23,6 +23,10 @@ columns:
         label: Total
         type: number
         format: "%0.2f"
+    discount_amount:
+        label: Total
+        type: number
+        format: "%0.2f"
     shipping_address:
         label: 'Shipping address'
         type: text

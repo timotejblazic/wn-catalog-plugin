@@ -107,6 +107,13 @@ class Plugin extends PluginBase
                         'icon'        => 'icon-cart-arrow-down',
                         'permissions' => ['tb.catalog.*'],
                         'order'       => 900,
+                    ],
+                    'coupons'     => [
+                        'label'       => 'tb.catalog::lang.models.coupon.label_plural',
+                        'url'         => Backend::url('tb/catalog/coupons'),
+                        'icon'        => 'icon-ticket',
+                        'permissions' => ['tb.catalog.*'],
+                        'order'       => 1000,
                     ]
                 ]
             ],

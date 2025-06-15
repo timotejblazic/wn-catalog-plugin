@@ -1,0 +1,35 @@
+columns:
+    id:
+        label: 'tb.catalog::lang.models.general.id'
+        searchable: true
+    code:
+        label: 'tb.catalog::lang.models.general.code'
+        searchable: true
+    type:
+        label: 'tb.catalog::lang.models.coupon.type'
+        searchable: true
+    value:
+        label: 'tb.catalog::lang.models.coupon.value'
+        searchable: true
+    usage_limit:
+        label: 'tb.catalog::lang.models.coupon.usage_limit'
+        searchable: true
+    times_used:
+        label: 'tb.catalog::lang.models.coupon.times_used'
+        searchable: true
+    expires_at:
+        label: 'tb.catalog::lang.models.coupon.expires_at'
+        type: datetime
+        searchable: true
+        sortable: true
+    created_at:
+        label: 'tb.catalog::lang.models.general.created_at'
+        type: datetime
+        searchable: true
+        sortable: true
+        invisible: true
+    updated_at:
+        label: 'tb.catalog::lang.models.general.updated_at'
+        type: datetime
+        searchable: true
+        sortable: true

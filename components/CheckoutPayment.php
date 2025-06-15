@@ -2,7 +2,9 @@
 
 use Cms\Classes\ComponentBase;
 use Illuminate\Support\Facades\Redirect;
+use Tb\Catalog\Models\Coupon;
 use Tb\Catalog\Services\CartManager;
+use Tb\Catalog\Services\DiscountService;
 use Tb\Catalog\Services\PaymentManager;
 use Tb\Catalog\Models\Order;
 use Tb\Catalog\Models\OrderItem;
@@ -42,21 +44,35 @@ class CheckoutPayment extends ComponentBase
 
     public function onPlaceOrder()
     {
-        $method = post('payment_method');
         $cart = new CartManager();
         $items = $cart->getItems();
+        $total = $cart->getTotal();
 
         if ($items->isEmpty()) {
             Flash::error('Your cart is empty.');
             return;
         }
 
+        // Calculate discounts
+        $couponCode = trim(post('coupon_code'));
+        $discountData = (new DiscountService())->calculate($cart->getItems(), $total, $couponCode);
+
+        if ($couponCode) {
+            $coupon = Coupon::where('code', $couponCode)->first();
+            $coupon ?? $coupon->markUsed();
+        }
+
+        $discountAmount = $discountData['totalDiscount'];
+        $breakdown = $discountData['breakdown'];
+
         $status = OrderStatus::findByCode(OrderStatus::PENDING);
         $order = Order::create([
             'basket_id'        => $cart->getBasket()->id,
             'user_id'          => optional(Auth::getUser())->id,
             'status_id'        => $status->id,
-            'total_amount'     => $cart->getTotal(),
+            'coupon_id'        => isset($coupon) ? $coupon->id : null,
+            'total_amount'     => $total - $discountAmount,
+            'discount_amount'  => $discountAmount,
             'shipping_address' => json_encode(post('shipping')),
             'billing_address'  => json_encode(post('billing')),
         ]);
@@ -70,8 +86,8 @@ class CheckoutPayment extends ComponentBase
             ]);
         }
 
-        $pm = new PaymentManager();
-        $init = $pm->initiate($method, $order);
+        $method = post('payment_method');
+        $init = (new PaymentManager())->initiate($method, $order);
 
         // $cart->clear();
 

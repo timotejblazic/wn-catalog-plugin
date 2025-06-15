@@ -45,3 +45,12 @@
 1.0.15:
     - 'Add payment status to order table'
     - v1.0.15/add_payment_status_to_order_table.php
+1.0.16:
+    - 'Create coupons table'
+    - v1.0.16/create_coupons_table.php
+1.0.17:
+    - 'Add coupon to orders'
+    - v1.0.17/add_coupon_to_orders.php
+1.0.18:
+    - 'Add discounts to products'
+    - v1.0.18/add_discounts_to_products.php

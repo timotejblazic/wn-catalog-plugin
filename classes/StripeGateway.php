@@ -19,8 +19,6 @@ class StripeGateway extends AbstractPaymentGateway
 
     public function initiatePayment($order)
     {
-        Stripe::setApiKey($this->secretKey);
-
         $session = Session::create([
             'payment_method_types' => ['card'],
             'line_items'           => $this->prepareStripeItems($order),
@@ -72,17 +70,29 @@ class StripeGateway extends AbstractPaymentGateway
 
     protected function prepareStripeItems($order)
     {
-        return $order->items->map(function ($item) {
-            $variant = $item->variant;
+        // -- This is the approach for every item to show up in the Stripe summary --
+        //        return $order->items->map(function ($item) {
+        //            $variant = $item->variant;
+        //
+        //            return [
+        //                'price_data' => [
+        //                    'currency'     => 'eur',
+        //                    'unit_amount'  => intval($variant->price * 100),
+        //                    'product_data' => ['name' => $variant->product->title . ' (' . $variant->title . ')'],
+        //                ],
+        //                'quantity'   => $item->quantity,
+        //            ];
+        //        })->toArray();
 
-            return [
+        return [
+            [
                 'price_data' => [
                     'currency'     => 'eur',
-                    'unit_amount'  => intval($variant->price * 100),
-                    'product_data' => ['name' => $variant->product->title . ' (' . $variant->title . ')'],
+                    'unit_amount'  => intval($order->total_amount * 100),
+                    'product_data' => ['name' => 'Order #' . $order->id],
                 ],
-                'quantity'   => $item->quantity,
-            ];
-        })->toArray();
+                'quantity'     => 1,
+            ]
+        ];
     }
 }

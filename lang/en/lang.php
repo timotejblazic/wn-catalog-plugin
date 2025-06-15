@@ -26,6 +26,8 @@ return [
             'label' => 'Product',
             'label_plural' => 'Products',
             'base_price' => 'Base price',
+            'discount_type' => 'Discount type',
+            'discount_value' => 'Discount value',
         ],
         'product_variant' => [
             'label' => 'Product variant',
@@ -51,6 +53,15 @@ return [
         'order' => [
             'label' => 'Order',
             'label_plural' => 'Orders',
+        ],
+        'coupon' => [
+            'label' => 'Coupon',
+            'label_plural' => 'Coupons',
+            'type' => 'Type',
+            'value' => 'Value',
+            'usage_limit' => 'Usage limit',
+            'times_used' => 'Times used',
+            'expires_at' => 'Expires at',
         ],
     ],
 ];

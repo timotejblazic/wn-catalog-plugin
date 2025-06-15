@@ -10,6 +10,17 @@ fields:
         type: number
         disabled: true
         span: auto
+    discount_amount:
+        label: Discount amount
+        type: number
+        disabled: true
+        span: auto
+    coupon:
+        label: Used coupon
+        type: relation
+        nameFrom: code
+        disabled: true
+        span: auto
     status:
         label: 'Order status'
         type: relation

@@ -1,0 +1,24 @@
+fields:
+    code:
+        label: 'tb.catalog::lang.models.general.code'
+        type: text
+        span: auto
+    type:
+        label: 'tb.catalog::lang.models.coupon.type'
+        type: dropdown
+        placeholder: -- select type --
+        span: auto
+    value:
+        label: 'tb.catalog::lang.models.coupon.value'
+        type: number
+        step: 0.01
+        span: auto
+    usage_limit:
+        label: 'tb.catalog::lang.models.coupon.usage_limit'
+        type: number
+        comment: Leave blank for unlimited
+        span: auto
+    expires_at:
+        label: 'tb.catalog::lang.models.coupon.expires_at'
+        type: datepicker
+        span: auto

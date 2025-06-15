@@ -1,0 +1,14 @@
+name: 'tb.catalog::lang.models.coupon.label'
+form: $/tb/catalog/models/coupon/fields.yaml
+modelClass: Tb\Catalog\Models\Coupon
+defaultRedirect: tb/catalog/coupons
+create:
+    title: backend::lang.form.create_title
+    redirect: tb/catalog/coupons/update/:id
+    redirectClose: tb/catalog/coupons
+update:
+    title: backend::lang.form.update_title
+    redirect: tb/catalog/coupons
+    redirectClose: tb/catalog/coupons
+preview:
+    title: backend::lang.form.preview_title

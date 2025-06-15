@@ -9,7 +9,16 @@
                         </a>
                     </h3>
                     <p>{{ product.description|raw }}</p>
-                    <p><strong>Price:</strong> {{ product.base_price }}</p>
+
+                    {% if product.discount_label %}
+                        <p>
+                            <strong class="sale-price">{{ product.discount_price }}€</strong>
+                            <small class="original-price"><s>€{{ product.base_price }}</s></small>
+                            <span class="badge">{{ product.discount_label }}</span>
+                        </p>
+                    {% else %}
+                        <p><strong>Price:</strong> €{{ product.base_price }}</p>
+                    {% endif %}
                 </li>
             {% endfor %}
         </ul>

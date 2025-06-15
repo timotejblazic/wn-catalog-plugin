@@ -1,5 +1,16 @@
 <div class="product-single">
     <h1>{{ product.title }}</h1>
+
+    {% if product.discount_label %}
+        <p>
+            <strong class="sale-price">{{ product.discount_price }}€</strong>
+            <small class="original-price"><s>€{{ product.base_price }}</s></small>
+            <span class="badge">{{ product.discount_label }}</span>
+        </p>
+    {% else %}
+        <p><strong>Price:</strong> €{{ product.base_price }}</p>
+    {% endif %}
+
     <p>{{ product.brand.title }}</p>
     <p>{{ product.description|raw }}</p>
     <p><strong>Price:</strong> {{ product.base_price }}</p>

@@ -1,22 +1,22 @@
 <?php namespace Tb\Catalog\Components;
 
-use Tb\Catalog\Models\Order;
-use Winter\User\Facades\Auth;
 use Cms\Classes\ComponentBase;
+use Illuminate\Support\Facades\Redirect;
+use Tb\Catalog\Services\CartManager;
+use Tb\Catalog\Services\PaymentManager;
+use Tb\Catalog\Models\Order;
 use Tb\Catalog\Models\OrderItem;
 use Tb\Catalog\Models\OrderStatus;
-use Tb\Catalog\Services\CartManager;
 use Winter\Storm\Support\Facades\Flash;
-use Winter\Storm\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
+use Winter\User\Facades\Auth;
 
-class CheckoutForm extends ComponentBase
+class CheckoutPayment extends ComponentBase
 {
     public function componentDetails()
     {
         return [
-            'name'        => 'Checkout Form',
-            'description' => 'Collects customer info and places an order'
+            'name'        => 'Checkout & Redirect',
+            'description' => 'Places the order and redirects to chosen gateway'
         ];
     }
 
@@ -24,8 +24,8 @@ class CheckoutForm extends ComponentBase
     {
         return [
             'redirectPage' => [
-                'title'       => 'Redirect Page',
-                'description' => 'Page to go to after a successful order, e.g. thank-you',
+                'title'       => 'Thank You Page',
+                'description' => 'Page to redirect after return from gateway',
                 'type'        => 'string',
                 'default'     => 'thank-you'
             ],
@@ -37,41 +37,28 @@ class CheckoutForm extends ComponentBase
         $cart = new CartManager();
         $this->page['cartItems'] = $cart->getItems();
         $this->page['cartTotal'] = $cart->getTotal();
+        $this->page['paymentMethods'] = array_keys(config('payment.drivers'));
     }
 
     public function onPlaceOrder()
     {
+        $method = post('payment_method');
         $cart = new CartManager();
         $items = $cart->getItems();
 
         if ($items->isEmpty()) {
+            Flash::error('Your cart is empty.');
             return;
         }
 
         $status = OrderStatus::findByCode(OrderStatus::PENDING);
-
-        $shipping = [
-            'name'    => Input::get('shipping_name'),
-            'street'  => Input::get('shipping_street'),
-            'city'    => Input::get('shipping_city'),
-            'zip'     => Input::get('shipping_zip'),
-            'country' => Input::get('shipping_country'),
-        ];
-        $billing = [
-            'name'    => Input::get('billing_name'),
-            'street'  => Input::get('billing_street'),
-            'city'    => Input::get('billing_city'),
-            'zip'     => Input::get('billing_zip'),
-            'country' => Input::get('billing_country'),
-        ];
-
         $order = Order::create([
             'basket_id'        => $cart->getBasket()->id,
             'user_id'          => optional(Auth::getUser())->id,
             'status_id'        => $status->id,
             'total_amount'     => $cart->getTotal(),
-            'shipping_address' => json_encode($shipping),
-            'billing_address'  => json_encode($billing),
+            'shipping_address' => json_encode(post('shipping')),
+            'billing_address'  => json_encode(post('billing')),
         ]);
 
         foreach ($items as $item) {
@@ -83,12 +70,11 @@ class CheckoutForm extends ComponentBase
             ]);
         }
 
-        $cart->clear();
+        $pm = new PaymentManager();
+        $init = $pm->initiate($method, $order);
 
-        Flash::success('Your order has been placed!');
+        // $cart->clear();
 
-        $redirectPage = $this->property('redirectPage');
-
-        return Redirect::to($this->pageUrl($redirectPage, ['id' => $order->id]));
+        return Redirect::to($init['redirectUrl']);
     }
 }

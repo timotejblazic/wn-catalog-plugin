@@ -36,3 +36,12 @@
 1.0.12:
     - 'Create order items table'
     - v1.0.12/create_order_items_table.php
+1.0.13:
+    - 'Create payment statuses table'
+    - v1.0.13/create_payment_statuses_table.php
+1.0.14:
+    - 'Seed payment statuses'
+    - v1.0.14/seed_payment_statuses.php
+1.0.15:
+    - 'Add payment status to order table'
+    - v1.0.15/add_payment_status_to_order_table.php

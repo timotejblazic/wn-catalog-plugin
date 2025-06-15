@@ -18,10 +18,10 @@ class OrderStatus extends Model
         'updated_at',
     ];
 
-    public const PENDING    = 'pending';
+    public const PENDING = 'pending';
     public const PROCESSING = 'processing';
-    public const COMPLETED  = 'completed';
-    public const CANCELLED  = 'cancelled';
+    public const COMPLETED = 'completed';
+    public const CANCELLED = 'cancelled';
 
     public $hasMany = [
         'orders' => [

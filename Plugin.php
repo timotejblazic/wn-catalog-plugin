@@ -40,12 +40,13 @@ class Plugin extends PluginBase
     public function registerComponents(): array
     {
         return [
-            \Tb\Catalog\Components\ProductList::class   => 'productList',
-            \Tb\Catalog\Components\ProductSingle::class => 'productSingle',
-            \Tb\Catalog\Components\AddToCart::class     => 'addToCart',
-            \Tb\Catalog\Components\CartSummary::class   => 'cartSummary',
-            \Tb\Catalog\Components\CartPage::class      => 'cartPage',
-            \Tb\Catalog\Components\CheckoutForm::class  => 'checkoutForm',
+            \Tb\Catalog\Components\ProductList::class     => 'productList',
+            \Tb\Catalog\Components\ProductSingle::class   => 'productSingle',
+            \Tb\Catalog\Components\AddToCart::class       => 'addToCart',
+            \Tb\Catalog\Components\CartSummary::class     => 'cartSummary',
+            \Tb\Catalog\Components\CartPage::class        => 'cartPage',
+            \Tb\Catalog\Components\CheckoutPayment::class => 'checkoutPayment',
+            \Tb\Catalog\Components\ThankYou::class        => 'thankYou',
         ];
     }
 
@@ -100,7 +101,7 @@ class Plugin extends PluginBase
                         'permissions' => ['tb.catalog.*'],
                         'order'       => 800,
                     ],
-                    'orders' => [
+                    'orders'     => [
                         'label'       => 'tb.catalog::lang.models.order.label_plural',
                         'url'         => Backend::url('tb/catalog/orders'),
                         'icon'        => 'icon-cart-arrow-down',

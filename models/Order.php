@@ -10,7 +10,7 @@ class Order extends Model
 
     public $table = 'tb_catalog_orders';
 
-    protected $fillable = ['basket_id', 'user_id', 'status_id', 'total_amount', 'shipping_address', 'billing_address'];
+    protected $fillable = ['basket_id', 'user_id', 'status_id', 'payment_status_id', 'total_amount', 'shipping_address', 'billing_address'];
 
     public $rules = [];
 
@@ -31,6 +31,10 @@ class Order extends Model
         'status' => [
             OrderStatus::class,
             'key' => 'status_id'
+        ],
+        'paymentStatus' => [
+            PaymentStatus::class,
+            'key' => 'payment_status_id'
         ]
     ];
 
@@ -40,4 +44,11 @@ class Order extends Model
             'key' => 'order_id'
         ]
     ];
+
+    public function getOrderProductTitles()
+    {
+        return $this->items->map(function ($item) {
+            return $item->variant->product->title . ' (' . $item->variant->title . ')';
+        });
+    }
 }

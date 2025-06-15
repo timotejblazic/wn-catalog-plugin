@@ -5,11 +5,20 @@ fields:
         nameFrom: name
         disabled: true
         span: auto
+    total_amount:
+        label: Total
+        type: number
+        disabled: true
+        span: auto
     status:
-        label: Status
+        label: 'Order status'
         type: relation
         nameFrom: name
-        disabled: true
+        span: auto
+    paymentStatus:
+        label: 'Payment status'
+        type: relation
+        nameFrom: name
         span: auto
     shipping_address:
         label: Shipping Address
@@ -21,11 +30,6 @@ fields:
         label: Billing Address
         type: textarea
         size: large
-        disabled: true
-        span: auto
-    total_amount:
-        label: Total
-        type: number
         disabled: true
         span: auto
 tabs:

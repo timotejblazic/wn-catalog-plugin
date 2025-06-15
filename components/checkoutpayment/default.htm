@@ -1,0 +1,44 @@
+<div class="checkout-payment">
+    {% if cartItems.count %}
+        <h3>Order Summary</h3>
+        <ul>
+            {% for item in cartItems %}
+                <li>
+                    {{ item.variant.product.title }} ({{ item.variant.title }})
+                    x {{ item.quantity }} =
+                    {{ (item.unit_price * item.quantity)|number_format(2,'.',',') }} €
+                </li>
+            {% endfor %}
+        </ul>
+        <p><strong>Total:</strong> {{ cartTotal|number_format(2,'.',',') }} €</p>
+
+        <form id="checkout-form"
+              data-request="checkoutPayment::onPlaceOrder"
+              data-request-flash>
+            <h4>Shipping Information</h4>
+            <input type="text" name="shipping[name]" placeholder="Name">
+            <input type="text" name="shipping[street]" placeholder="Street">
+            <input type="text" name="shipping[city]" placeholder="City">
+            <input type="text" name="shipping[zip]" placeholder="ZIP">
+            <input type="text" name="shipping[country]" placeholder="Country">
+
+            <h4>Billing Information</h4>
+            <input type="text" name="billing[name]" placeholder="Name">
+            <input type="text" name="billing[street]" placeholder="Street">
+            <input type="text" name="billing[city]" placeholder="City">
+            <input type="text" name="billing[zip]" placeholder="ZIP">
+            <input type="text" name="billing[country]" placeholder="Country">
+
+            <h4>Payment Method</h4>
+            <select name="payment_method">
+                {% for method in paymentMethods %}
+                    <option value="{{ method }}">{{ method|capitalize }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+        </form>
+    {% else %}
+        <p>Your cart is empty. <a href="{{ 'products'|page }}">Continue Shopping</a></p>
+    {% endif %}
+</div>

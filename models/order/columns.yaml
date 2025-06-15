@@ -6,8 +6,13 @@ columns:
         label: 'Basket id'
         type: text
     status:
-        label: Status
+        label: 'Order status'
         relation: status
+        select: name
+        sortable: true
+    payment_status:
+        label: 'Payment status'
+        relation: paymentStatus
         select: name
         sortable: true
     user:

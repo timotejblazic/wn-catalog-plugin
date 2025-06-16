@@ -1,0 +1,17 @@
+fields:
+    name:
+        label: 'tb.catalog::lang.models.general.name'
+        type: text
+        span: auto
+    type:
+        label: 'tb.catalog::lang.models.paymentmethod.type'
+        type: dropdown
+        span: auto
+    public_key:
+        label: 'tb.catalog::lang.models.paymentmethod.public_key'
+        type: text
+        span: auto
+    secret_key:
+        label: 'tb.catalog::lang.models.paymentmethod.secret_key'
+        type: text
+        span: auto

@@ -115,12 +115,19 @@ class Plugin extends PluginBase
                         'permissions' => ['tb.catalog.*'],
                         'order'       => 1000,
                     ],
+                    'paymentmethods' => [
+                        'label'       => 'tb.catalog::lang.models.paymentmethod.label_plural',
+                        'url'         => Backend::url('tb/catalog/paymentmethods'),
+                        'icon'        => 'icon-credit-card',
+                        'permissions' => ['tb.catalog.*'],
+                        'order'       => 1100,
+                    ],
                     'deliverymethods' => [
                         'label'       => 'tb.catalog::lang.models.deliverymethod.label_plural',
                         'url'         => Backend::url('tb/catalog/deliverymethods'),
                         'icon'        => 'icon-truck',
                         'permissions' => ['tb.catalog.*'],
-                        'order'       => 1100,
+                        'order'       => 1200,
                     ],
                 ]
             ],

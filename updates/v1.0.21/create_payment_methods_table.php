@@ -8,17 +8,18 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('tb_catalog_delivery_methods', function (Blueprint $table) {
+        Schema::create('tb_catalog_payment_methods', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('type')->unique();
             $table->string('name');
-            $table->decimal('cost', 10, 2);
-            $table->decimal('free_over_amount', 10, 2)->nullable();
+            $table->string('public_key')->nullable();
+            $table->text('secret_key')->nullable();
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('tb_catalog_delivery_methods');
+        Schema::dropIfExists('tb_catalog_payment_methods');
     }
 };

@@ -4,6 +4,7 @@ use Cms\Classes\ComponentBase;
 use Illuminate\Support\Facades\Redirect;
 use Tb\Catalog\Models\Coupon;
 use Tb\Catalog\Models\DeliveryMethod;
+use Tb\Catalog\Models\PaymentMethod;
 use Tb\Catalog\Services\CartManager;
 use Tb\Catalog\Services\DiscountService;
 use Tb\Catalog\Services\PaymentManager;
@@ -40,7 +41,7 @@ class CheckoutPayment extends ComponentBase
         $cart = new CartManager();
         $this->page['cartItems'] = $cart->getItems();
         $this->page['cartTotal'] = $cart->getTotal();
-        $this->page['paymentMethods'] = array_keys(config('payment.drivers'));
+        $this->page['paymentMethods'] = PaymentMethod::all();
         $this->page['deliveryMethods'] = DeliveryMethod::all();
     }
 

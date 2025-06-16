@@ -9,9 +9,12 @@ class DeliveryMethod extends Model
 
     public $table = 'tb_catalog_delivery_methods';
 
-    protected $fillable = ['name', 'cost', 'min_weight', 'free_over_amount'];
+    protected $fillable = ['name', 'cost', 'free_over_amount'];
 
-    public $rules = [];
+    public $rules = [
+        'name' => 'required',
+        'cost' => 'required',
+    ];
 
     protected $dates = [
         'created_at',

@@ -5,12 +5,6 @@ columns:
     name:
         label: 'tb.catalog::lang.models.general.name'
         searchable: true
-    cost:
-        label: 'tb.catalog::lang.models.deliverymethod.cost'
-        type: number
-        format: "%0.2f"
-    free_over_amount:
-        label: 'tb.catalog::lang.models.deliverymethod.free_over'
     created_at:
         label: 'tb.catalog::lang.models.general.created_at'
         type: datetime

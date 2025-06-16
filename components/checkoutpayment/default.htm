@@ -15,15 +15,8 @@
         <form id="checkout-form"
               data-request="checkoutPayment::onPlaceOrder"
               data-request-flash>
-            <h4>Delivery Method</h4>
-            <select name="delivery_method_id">
-                {% for dm in deliveryMethods %}
-                    <option value="{{ dm.id }}">{{ dm.name }} —
-                        €{{ dm.cost|number_format(2,'.',',') }}
-                    </option>
-                {% endfor %}
-            </select>
 
+            <br>
             <h4>Shipping Information</h4>
             <input type="text" name="shipping[name]" placeholder="Name">
             <input type="text" name="shipping[street]" placeholder="Street">
@@ -38,13 +31,25 @@
             <input type="text" name="billing[zip]" placeholder="ZIP">
             <input type="text" name="billing[country]" placeholder="Country">
 
-            <h4>Payment Method</h4>
-            <select name="payment_method">
-                {% for method in paymentMethods %}
-                    <option value="{{ method }}">{{ method|capitalize }}</option>
+            <br><br>
+            <h4>Delivery Method</h4>
+            <select name="delivery_method_id">
+                {% for dm in deliveryMethods %}
+                    <option value="{{ dm.id }}">{{ dm.name }} —
+                        €{{ dm.cost|number_format(2,'.',',') }}
+                    </option>
                 {% endfor %}
             </select>
 
+            <br><br>
+            <h4>Payment Method</h4>
+            <select name="payment_method">
+                {% for method in paymentMethods %}
+                    <option value="{{ method.type }}">{{ method.name }}</option>
+                {% endfor %}
+            </select>
+
+            <br><br>
             <h4>Have a coupon?</h4>
             <input type="text" name="coupon_code" placeholder="Enter coupon code">
 

@@ -1,0 +1,14 @@
+name: 'tb.catalog::lang.models.paymentmethod.label'
+form: $/tb/catalog/models/paymentmethod/fields.yaml
+modelClass: Tb\Catalog\Models\PaymentMethod
+defaultRedirect: tb/catalog/paymentmethods
+create:
+    title: backend::lang.form.create_title
+    redirect: tb/catalog/paymentmethods/update/:id
+    redirectClose: tb/catalog/paymentmethods
+update:
+    title: backend::lang.form.update_title
+    redirect: tb/catalog/paymentmethods
+    redirectClose: tb/catalog/paymentmethods
+preview:
+    title: backend::lang.form.preview_title

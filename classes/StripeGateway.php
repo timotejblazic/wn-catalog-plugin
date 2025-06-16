@@ -9,12 +9,12 @@ use Winter\Storm\Exception\ApplicationException;
 
 class StripeGateway extends AbstractPaymentGateway
 {
-    protected $secretKey;
+    protected $method;
 
-    public function __construct()
+    public function __construct($method)
     {
-        $this->secretKey = config('payment.drivers.stripe.sk');
-        Stripe::setApiKey($this->secretKey);
+        $this->method = $method;
+        Stripe::setApiKey($this->method->secret_key);
     }
 
     public function initiatePayment($order)
@@ -23,9 +23,7 @@ class StripeGateway extends AbstractPaymentGateway
             'payment_method_types' => ['card'],
             'line_items'           => $this->prepareStripeItems($order),
             'mode'                 => 'payment',
-            'success_url'          => url(
-                    '/thank-you/' . $order->id
-                ) . '?method=stripe&session_id={CHECKOUT_SESSION_ID}',
+            'success_url'          => url('/thank-you/' . $order->id) . '?method=stripe&session_id={CHECKOUT_SESSION_ID}',
             'cancel_url'           => url('/checkout'),
             'metadata'             => ['order_id' => $order->id],
         ]);
@@ -91,7 +89,7 @@ class StripeGateway extends AbstractPaymentGateway
                     'unit_amount'  => intval($order->total_amount * 100),
                     'product_data' => ['name' => 'Order #' . $order->id],
                 ],
-                'quantity'     => 1,
+                'quantity'   => 1,
             ]
         ];
     }

@@ -67,8 +67,14 @@ return [
             'label' => 'Delivery Method',
             'label_plural' => 'Delivery Methods',
             'cost' => 'Base cost',
-            'min_weight' => 'Min weight (kg)',
             'free_over' => 'Free over (€)',
+        ],
+        'paymentmethod' => [
+            'label' => 'Payment Method',
+            'label_plural' => 'Payment Methods',
+            'type' => 'Payment type',
+            'public_key' => 'Public key',
+            'secret_key' => 'Secret key',
         ],
     ],
 ];

@@ -60,3 +60,6 @@
 1.0.20:
     - 'Add delivery to orders'
     - v1.0.20/add_delivery_to_orders.php
+1.0.21:
+    - 'Create payment methods table'
+    - v1.0.21/create_payment_methods_table.php

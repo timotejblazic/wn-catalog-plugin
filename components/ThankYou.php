@@ -32,8 +32,7 @@ class ThankYou extends ComponentBase
         $method = Input::get('method');
         $data = Input::all();
 
-        $pm = new PaymentManager();
-        $result = $pm->confirm($method, $data);
+        $result = (new PaymentManager())->confirm($method, $data);
 
         $this->page['orderId'] = $result['orderId'];
         $this->page['paymentStatus'] = $result['paymentStatus'];

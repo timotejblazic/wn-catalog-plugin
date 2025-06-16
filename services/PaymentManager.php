@@ -1,5 +1,6 @@
 <?php namespace Tb\Catalog\Services;
 
+use Tb\Catalog\Models\PaymentMethod;
 use Winter\Storm\Exception\ApplicationException;
 
 class PaymentManager
@@ -8,16 +9,12 @@ class PaymentManager
 
     public function __construct()
     {
-        $drivers = config('payment.drivers');
+        foreach (PaymentMethod::all() as $method) {
+            $class = 'Tb\\Catalog\\Classes\\' . ucfirst($method->type) . 'Gateway';
 
-        foreach ($drivers as $code => $cfg) {
-            $class = 'Tb\\Catalog\\Classes\\' . ucfirst($code) . 'Gateway';
-
-            if (!class_exists($class)) {
-                continue;
+            if (class_exists($class)) {
+                $this->gateways[$method->type] = app()->make($class, ['method' => $method]);
             }
-
-            $this->gateways[$code] = app()->make($class);
         }
     }
 
@@ -26,15 +23,16 @@ class PaymentManager
         if (!isset($this->gateways[$driverCode])) {
             throw new ApplicationException("Payment driver [$driverCode] not configured");
         }
+
         return $this->gateways[$driverCode];
     }
 
-    public function initiate(string $driver, $order): array
+    public function initiate($driver, $order)
     {
         return $this->gateway($driver)->initiatePayment($order);
     }
 
-    public function confirm(string $driver, array $data): array
+    public function confirm($driver, $data)
     {
         return $this->gateway($driver)->confirmPayment($data);
     }

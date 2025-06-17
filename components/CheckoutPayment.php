@@ -38,56 +38,61 @@ class CheckoutPayment extends ComponentBase
 
     public function onRun()
     {
-        $cart = new CartManager();
-        $this->page['cartItems'] = $cart->getItems();
-        $this->page['cartTotal'] = $cart->getTotal();
         $this->page['paymentMethods'] = PaymentMethod::all();
         $this->page['deliveryMethods'] = DeliveryMethod::all();
+        $this->page['cartItems'] = (new CartManager())->getItems();
+
+        // Summary with no coupon, default method
+        $defaultMethodId = $this->page['deliveryMethods']->first()->id ?? null;
+        $prices = $this->calculateAllPrices(null, $defaultMethodId);
+
+        // Inject vars to frontend
+        foreach ($prices as $key => $value) {
+            $this->page[$key] = $value;
+        }
     }
 
     public function onPlaceOrder()
     {
         $cart = new CartManager();
         $items = $cart->getItems();
-        $total = $cart->getTotal();
+        $deliveryMethodId = post('delivery_method_id');
 
         if ($items->isEmpty()) {
             Flash::error('Your cart is empty.');
             return;
         }
 
-        // Calculate discounts
+        // Load and validate coupon
         $couponCode = trim(post('coupon_code'));
-        $discountData = (new DiscountService())->calculate($cart->getItems(), $total, $couponCode);
-
-        // Increment coupon usage
+        $coupon = null;
         if ($couponCode) {
             $coupon = Coupon::where('code', $couponCode)->first();
-                $coupon ?? $coupon->markUsed();
         }
 
-        // Discount data
-        $discountAmount = $discountData['totalDiscount'];
-        $breakdown = $discountData['breakdown'];
+        $prices = $this->calculateAllPrices($couponCode, $deliveryMethodId);
 
-        // Delivery method - calculate cost
-        $deliveryMethodId = post('delivery_method_id');
-        $shippingCost = DeliveryMethod::find($deliveryMethodId)->calculateCost($total - $discountAmount);
+        // Increment coupon usage if coupon is applied
+        if (!empty($prices['couponSavings']) && $coupon) {
+            $coupon->markUsed();
+        }
 
+        // Create order
         $status = OrderStatus::findByCode(OrderStatus::PENDING);
         $order = Order::create([
             'basket_id'          => $cart->getBasket()->id,
             'user_id'            => optional(Auth::getUser())->id,
             'status_id'          => $status->id,
             'coupon_id'          => isset($coupon) ? $coupon->id : null,
-            'total_amount'       => $total - $discountAmount + $shippingCost,
-            'discount_amount'    => $discountAmount,
             'shipping_address'   => json_encode(post('shipping')),
             'billing_address'    => json_encode(post('billing')),
             'delivery_method_id' => $deliveryMethodId,
-            'shipping_cost'      => $shippingCost,
+            'discount_amount'    => $prices['productDiscount'] + $prices['couponSavings'],
+            'shipping_cost'      => $prices['shippingCost'],
+            'total_amount'       => $prices['overallTotal'],
         ]);
 
+        // Create order items
         foreach ($items as $item) {
             OrderItem::create([
                 'order_id'           => $order->id,
@@ -97,11 +102,55 @@ class CheckoutPayment extends ComponentBase
             ]);
         }
 
+        // Initiate payment
         $method = post('payment_method');
         $init = (new PaymentManager())->initiate($method, $order);
 
         // $cart->clear();
 
         return Redirect::to($init['redirectUrl']);
+    }
+
+    public function onUpdateSummary()
+    {
+        $prices = $this->calculateAllPrices(post('coupon_code'), post('delivery_method_id'));
+
+        foreach ($prices as $key => $value) {
+            $this->page[$key] = $value;
+        }
+
+        return [
+            '#js-summary-container' => $this->renderPartial('@_summary'),
+        ];
+    }
+
+    protected function calculateAllPrices($couponCode, $deliveryMethodId)
+    {
+        // 1) Cart
+        $cart = new CartManager();
+        $items = $cart->getItems();
+        $total = $cart->getTotal();
+
+        // 2) Discounts (product + coupon)
+        $discountData = (new DiscountService())->calculate($items, $total, $couponCode);
+        $couponSavings = $discountData['breakdown']['coupon'] ?? 0;
+        $productDiscount = $discountData['totalDiscount'] - $couponSavings;
+        $discountedProductTotal = round($total - $productDiscount, 2);
+
+        // 3) Shipping
+        $method = $deliveryMethodId ? DeliveryMethod::find($deliveryMethodId) : DeliveryMethod::all()->first();
+        $shippingCost = $method ? $method->calculateCost($discountedProductTotal) : 0.0;
+
+        // 4) Overall
+        $overallTotal = round($discountedProductTotal + $shippingCost - $couponSavings, 2);
+
+        return compact(
+            'total',
+            'productDiscount',
+            'discountedProductTotal',
+            'couponSavings',
+            'shippingCost',
+            'overallTotal'
+        );
     }
 }

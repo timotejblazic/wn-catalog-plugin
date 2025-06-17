@@ -53,7 +53,7 @@ class Product extends Model
         $price = $this->base_price;
 
         if (!$this->discount_type || !$this->discount_value) {
-            return $price;
+            return null;
         }
 
         if ($this->discount_type === 'fixed') {
@@ -70,7 +70,7 @@ class Product extends Model
         }
 
         if ($this->discount_type === 'fixed') {
-            return number_format($this->discount_value,2) . '€ OFF';
+            return number_format($this->discount_value, 2) . '€ OFF';
         }
 
         return intval($this->discount_value) . '% OFF';

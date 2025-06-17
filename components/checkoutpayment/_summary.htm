@@ -1,0 +1,26 @@
+<div class="order-summary">
+    <h3>Order Summary</h3>
+    <ul>
+        <li>
+            Products:
+            <span>€{{ discountedProductTotal|number_format(2,'.',',') }}</span>
+            {% if productDiscount > 0 %}
+                <small class="text-muted">
+                    (Saved €{{ productDiscount|number_format(2,'.',',') }})
+                </small>
+            {% endif %}
+        </li>
+        <li>
+            Shipping:
+            <span>€{{ shippingCost|number_format(2,'.',',') }}</span>
+        </li>
+        <li>
+            Coupon savings:
+            <span>–€{{ couponSavings|number_format(2,'.',',') }}</span>
+        </li>
+        <li>
+            <strong>Total:</strong>
+            <strong>€{{ overallTotal|number_format(2,'.',',') }}</strong>
+        </li>
+    </ul>
+</div>

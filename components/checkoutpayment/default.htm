@@ -1,21 +1,28 @@
 <div class="checkout-payment">
     {% if cartItems.count %}
-        <h3>Order Summary</h3>
+        <h3>Products</h3>
         <ul>
             {% for item in cartItems %}
                 <li>
-                    {{ item.variant.product.title }} ({{ item.variant.title }})
-                    x {{ item.quantity }} =
-                    {{ (item.unit_price * item.quantity)|number_format(2,'.',',') }} €
+                    <div>{{ item.variant.product.title }} ({{ item.variant.title }}) x {{ item.quantity }}</div>
+                    <div>
+                        {% if item.variant.discount_price %}
+                            <s>{{ (item.unit_price * item.quantity)|number_format(2, '.', ',') }} €</s>
+                            <span>{{ (item.variant.discount_price * item.quantity)|number_format(2, '.', ',') }} €</span>
+                        {% else %}
+                            <span>{{ (item.unit_price * item.quantity)|number_format(2, '.', ',') }} €</span>
+                        {% endif %}
+                    </div>
+
                 </li>
             {% endfor %}
         </ul>
-        <p><strong>Total:</strong> {{ cartTotal|number_format(2,'.',',') }} €</p>
 
-        <form id="checkout-form"
-              data-request="checkoutPayment::onPlaceOrder"
-              data-request-flash>
+        <div id="js-summary-container">
+            {% partial '@_summary' %}
+        </div>
 
+        <form id="checkout-form" data-request="onPlaceOrder" data-request-flash>
             <br>
             <h4>Shipping Information</h4>
             <input type="text" name="shipping[name]" placeholder="Name">
@@ -33,7 +40,7 @@
 
             <br><br>
             <h4>Delivery Method</h4>
-            <select name="delivery_method_id">
+            <select name="delivery_method_id" data-request="onUpdateSummary">
                 {% for dm in deliveryMethods %}
                     <option value="{{ dm.id }}">{{ dm.name }} —
                         €{{ dm.cost|number_format(2,'.',',') }}
@@ -51,8 +58,7 @@
 
             <br><br>
             <h4>Have a coupon?</h4>
-            <input type="text" name="coupon_code" placeholder="Enter coupon code">
-
+            <input data-request="onUpdateSummary" data-track-input type="text" name="coupon_code" placeholder="Enter coupon code">
 
             <br><br>
             <button type="submit" class="btn btn-primary">Proceed to Payment</button>

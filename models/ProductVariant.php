@@ -2,6 +2,7 @@
 
 use Winter\Storm\Database\Model;
 use \Winter\Storm\Database\Traits\Validation;
+use Winter\Storm\Exception\ApplicationException;
 
 class ProductVariant extends Model
 {
@@ -47,5 +48,27 @@ class ProductVariant extends Model
     public function getDiscountLabelAttribute()
     {
         return $this->product->discount_label;
+    }
+
+    public function isAvailable($quantity = 1)
+    {
+        return $this->stock >= $quantity;
+    }
+
+    public function decrementStock($quantity)
+    {
+        if (!$this->isAvailable($quantity)) {
+            $this->handleOutOfStock();
+        }
+
+        $this->stock = $this->stock - $quantity;
+        $this->save();
+    }
+
+    public function handleOutOfStock()
+    {
+        throw new ApplicationException(
+            "Not enough stock for “{$this->product->title} ({$this->title})”."
+        );
     }
 }

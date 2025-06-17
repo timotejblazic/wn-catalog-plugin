@@ -43,6 +43,18 @@ class Product extends Model
         ],
     ];
 
+    public function afterSave()
+    {
+        $variants = $this->variants();
+        if ($variants->count() === 0) {
+            $variants->create([
+                'title'     => $this->title,
+                'price'     => $this->base_price,
+                'stock'     => 0,
+            ]);
+        }
+    }
+
     public function getDiscountTypeOptions()
     {
         return ['fixed' => 'Fixed amount', 'percent' => 'Percent'];

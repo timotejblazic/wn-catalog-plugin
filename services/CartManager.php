@@ -1,5 +1,6 @@
 <?php namespace Tb\Catalog\Services;
 
+use Winter\Storm\Exception\ApplicationException;
 use Winter\User\Facades\Auth;
 use Tb\Catalog\Models\Basket;
 use Tb\Catalog\Models\ProductVariant;
@@ -15,12 +16,18 @@ class CartManager
         return Basket::firstOrCreate(['session_id' => Session::getId()]);
     }
 
-    public function addItem(int $variantId, int $qty = 1)
+    public function addItem($variantId, $qty = 1)
     {
         $basket = $this->getBasket();
         $item = $basket->items()->where('product_variant_id', $variantId)->first();
         $variant = ProductVariant::findOrFail($variantId);
         $price = $variant->price;
+
+        // Check stock
+        $currentQty = $this->getQuantityInCart($variant);
+        if (!$variant->isAvailable($currentQty + $qty)) {
+            $variant->handleOutOfStock();
+        }
 
         if ($item) {
             $item->quantity += $qty;
@@ -37,22 +44,30 @@ class CartManager
         return $item;
     }
 
-    public function updateItem(int $itemId, int $qty)
+    public function updateItem($itemId, $qty)
     {
         $basket = $this->getBasket();
         $item = $basket->items()->find($itemId);
+
         if (!$item) {
             return false;
         }
+
         if ($qty < 1) {
-            return (bool)$item->delete();
+            return $item->delete();
         }
+
+        // Check stock
+        if (!$item->variant->isAvailable($qty)) {
+            $item->variant->handleOutOfStock();
+        }
+
         $item->quantity = $qty;
 
         return $item->save();
     }
 
-    public function removeItem(int $itemId)
+    public function removeItem($itemId)
     {
         return $this->getBasket()->items()->where('id', $itemId)->delete();
     }
@@ -98,5 +113,13 @@ class CartManager
 
             $sessionBasket->delete();
         }
+    }
+
+    protected function getQuantityInCart($variant)
+    {
+         return $this->getBasket()
+             ->items()
+             ->where('product_variant_id', $variant->id)
+             ->sum('quantity');
     }
 }

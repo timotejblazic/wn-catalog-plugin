@@ -63,6 +63,14 @@ class CheckoutPayment extends ComponentBase
             return;
         }
 
+        // Check stock
+        foreach ($items as $item) {
+            if (!$item->variant->isAvailable($item->quantity)) {
+                Flash::error("Not enough stock for “{$item->variant->product->title} ({$item->variant->title})”.");
+                return;
+            }
+        }
+
         // Load and validate coupon
         $couponCode = trim(post('coupon_code'));
         $coupon = null;
@@ -100,6 +108,11 @@ class CheckoutPayment extends ComponentBase
                 'quantity'           => $item->quantity,
                 'unit_price'         => $item->unit_price,
             ]);
+        }
+
+        // Decrement stock for ordered items
+        foreach ($items as $item) {
+            $item->variant->decrementStock($item->quantity);
         }
 
         // Initiate payment

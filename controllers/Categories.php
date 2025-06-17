@@ -23,7 +23,7 @@ class Categories extends Controller
 
     public function formExtendModel($model)
     {
-        if(!$model->exists && get('subcategory')) {
+        if (!$model->exists && get('subcategory')) {
             $model->parent_id = get('subcategory');
         }
     }

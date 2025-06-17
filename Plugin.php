@@ -47,6 +47,8 @@ class Plugin extends PluginBase
             \Tb\Catalog\Components\CartPage::class        => 'cartPage',
             \Tb\Catalog\Components\CheckoutPayment::class => 'checkoutPayment',
             \Tb\Catalog\Components\ThankYou::class        => 'thankYou',
+            \Tb\Catalog\Components\UserOrders::class      => 'userOrders',
+            \Tb\Catalog\Components\OrderDetail::class     => 'orderDetail',
         ];
     }
 
@@ -73,49 +75,49 @@ class Plugin extends PluginBase
                 'permissions' => ['tb.catalog.*'],
                 'order'       => 500,
                 'sideMenu'    => [
-                    'products'   => [
+                    'products'        => [
                         'label'       => 'tb.catalog::lang.models.product.label_plural',
                         'url'         => Backend::url('tb/catalog/products'),
                         'icon'        => 'icon-cubes',
                         'permissions' => ['tb.catalog.*'],
                         'order'       => 500,
                     ],
-                    'brands'     => [
+                    'brands'          => [
                         'label'       => 'tb.catalog::lang.models.brand.label_plural',
                         'url'         => Backend::url('tb/catalog/brands'),
                         'icon'        => 'icon-copyright',
                         'permissions' => ['tb.catalog.*'],
                         'order'       => 600,
                     ],
-                    'categories' => [
+                    'categories'      => [
                         'label'       => 'tb.catalog::lang.models.category.label_plural',
                         'url'         => Backend::url('tb/catalog/categories'),
                         'icon'        => 'icon-sitemap',
                         'permissions' => ['tb.catalog.*'],
                         'order'       => 700,
                     ],
-                    'attributes' => [
+                    'attributes'      => [
                         'label'       => 'tb.catalog::lang.models.attribute.label_plural',
                         'url'         => Backend::url('tb/catalog/attributes'),
                         'icon'        => 'icon-info-circle',
                         'permissions' => ['tb.catalog.*'],
                         'order'       => 800,
                     ],
-                    'orders'     => [
+                    'orders'          => [
                         'label'       => 'tb.catalog::lang.models.order.label_plural',
                         'url'         => Backend::url('tb/catalog/orders'),
                         'icon'        => 'icon-cart-arrow-down',
                         'permissions' => ['tb.catalog.*'],
                         'order'       => 900,
                     ],
-                    'coupons'     => [
+                    'coupons'         => [
                         'label'       => 'tb.catalog::lang.models.coupon.label_plural',
                         'url'         => Backend::url('tb/catalog/coupons'),
                         'icon'        => 'icon-ticket',
                         'permissions' => ['tb.catalog.*'],
                         'order'       => 1000,
                     ],
-                    'paymentmethods' => [
+                    'paymentmethods'  => [
                         'label'       => 'tb.catalog::lang.models.paymentmethod.label_plural',
                         'url'         => Backend::url('tb/catalog/paymentmethods'),
                         'icon'        => 'icon-credit-card',

@@ -1,6 +1,5 @@
 <?php namespace Tb\Catalog\Services;
 
-use Winter\Storm\Exception\ApplicationException;
 use Winter\User\Facades\Auth;
 use Tb\Catalog\Models\Basket;
 use Tb\Catalog\Models\ProductVariant;

@@ -65,6 +65,17 @@ class Plugin extends PluginBase
         ];
     }
 
+    public function registerReportWidgets()
+    {
+        return [
+            \Tb\Catalog\ReportWidgets\DailySales::class => [
+                'label'       => 'Daily Sales',
+                'context'     => 'dashboard',
+                'permissions' => ['tb.catalog.*']
+            ],
+        ];
+    }
+
     public function registerNavigation(): array
     {
         return [

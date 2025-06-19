@@ -25,6 +25,7 @@ class Plugin extends PluginBase
      */
     public function register(): void
     {
+        $this->registerConsoleCommand('tb.catalog.seed', \Tb\Catalog\Console\SeedCommand::class);
     }
 
     /**

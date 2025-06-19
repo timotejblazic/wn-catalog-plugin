@@ -1,28 +1,79 @@
-<div class="product-list">
-    {% if products.count %}
-        <ul>
-            {% for product in products %}
-                <li class="product-item">
-                    <h3>
-                        <a href="{{ 'productsingle'|page({ slug: product.slug }) }}">
-                            {{ product.title }}
-                        </a>
-                    </h3>
-                    <p>{{ product.description|raw }}</p>
+<form method="get" class="product-filters">
 
-                    {% if product.discount_label %}
-                        <p>
-                            <strong class="sale-price">{{ product.discount_price }}€</strong>
-                            <small class="original-price"><s>€{{ product.base_price }}</s></small>
-                            <span class="badge">{{ product.discount_label }}</span>
-                        </p>
-                    {% else %}
-                        <p><strong>Price:</strong> €{{ product.base_price }}</p>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
+    <select class="form-control" name="category">
+        <option value="">All Categories</option>
+        {% for cat in categories %}
+            <option value="{{ cat.slug }}"
+                    {{ filterParams.category == cat.slug ? 'selected' : '' }}>
+                {{ cat.title }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <select class="form-control" name="brand">
+        <option value="">All Brands</option>
+        {% for br in brands %}
+            <option value="{{ br.slug }}"
+                    {{ filterParams.brand == br.slug ? 'selected' : '' }}>
+                {{ br.title }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <input class="form-control" type="number" name="price_min"
+           placeholder="Min Price"
+           value="{{ filterParams.priceMin }}"/>
+
+    <input class="form-control" type="number" name="price_max"
+           placeholder="Max Price"
+           value="{{ filterParams.priceMax }}"/>
+
+    <select class="form-control" name="sort">
+        <option value="newest"
+                {{ filterParams.sort == 'newest' ? 'selected' : '' }}>
+            Newest
+        </option>
+        <option value="price_asc"
+                {{ filterParams.sort == 'price_asc' ? 'selected' : '' }}>
+            Price ↑
+        </option>
+        <option value="price_desc"
+                {{ filterParams.sort == 'price_desc' ? 'selected' : '' }}>
+            Price ↓
+        </option>
+    </select>
+
+    <button class="btn btn-primary" type="submit">Filter</button>
+</form>
+
+
+<div class="product-grid">
+    {% for product in products %}
+        <div class="product-card" style="margin-bottom: 64px;">
+            <h4>{{ product.title }}</h4>
+            <small>{{ product.brand.title }}</small>
+
+            {% if product.discount_price and product.discount_price < product.base_price %}
+                <p>
+                    <span class="sale-price">{{ product.discount_price }}€</span>
+                    <s>{{ product.base_price }}€</s>
+                </p>
+            {% else %}
+                <p>{{ product.base_price }}€</p>
+            {% endif %}
+
+            <small>CATEGORIES:</small>
+            <ul>
+                {% for category in product.categories %}
+                    <li>{{ category.title }}</li>
+                {% endfor %}
+            </ul>
+        </div>
     {% else %}
-        <p>No products found.</p>
-    {% endif %}
+        <p>No products found matching your filters.</p>
+    {% endfor %}
+</div>
+
+<div class="pagination">
+    {{ products.render() | raw }}
 </div>

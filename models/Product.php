@@ -11,7 +11,7 @@ class Product extends Model
 
     public $table = 'tb_catalog_products';
 
-    protected $fillable = ['title', 'slug', 'description', 'base_price', 'discount_type', 'discount_value', 'pictures'];
+    protected $fillable = ['title', 'slug', 'description', 'base_price', 'discount_type', 'discount_value', 'pictures', 'brand_id'];
 
     protected $appends = ['discount_price','discount_label'];
 

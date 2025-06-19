@@ -21,7 +21,7 @@ class ProductList extends ComponentBase
             'pageSize' => [
                 'title'             => 'Products per page',
                 'type'              => 'string',
-                'default'           => '0',
+                'default'           => '4',
                 'validationPattern' => '^[0-9]+$',
             ],
         ];
@@ -29,10 +29,24 @@ class ProductList extends ComponentBase
 
     public function onRun()
     {
+        $this->prepareVars();
+    }
+
+    public function onFilter()
+    {
+        $this->prepareVars();
+
+        return [
+            '#product-list' => $this->renderPartial('@_products')
+        ];
+    }
+
+    protected function prepareVars()
+    {
         $this->page['categories'] = Category::orderBy('title')->get();
         $this->page['brands'] = Brand::orderBy('title')->get();
-        $this->page['products'] = $this->loadProducts();
         $this->page['filterParams'] = $this->getFilterParams();
+        $this->page['products'] = $this->loadProducts();
     }
 
     protected function getFilterParams(): array

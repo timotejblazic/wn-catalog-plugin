@@ -1,0 +1,30 @@
+<div class="product-grid">
+    {% for product in products %}
+        <div class="product-card" style="margin-bottom: 64px;">
+            <h4>{{ product.title }}</h4>
+            <small>{{ product.brand.title }}</small>
+
+            {% if product.discount_price and product.discount_price < product.base_price %}
+                <p>
+                    <span class="sale-price">{{ product.discount_price }}€</span>
+                    <s>{{ product.base_price }}€</s>
+                </p>
+            {% else %}
+                <p>{{ product.base_price }}€</p>
+            {% endif %}
+
+            <small>CATEGORIES:</small>
+            <ul>
+                {% for category in product.categories %}
+                    <li>{{ category.title }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <p>No products found matching your filters.</p>
+    {% endfor %}
+</div>
+
+<div class="pagination">
+    {{ products.render() | raw }}
+</div>

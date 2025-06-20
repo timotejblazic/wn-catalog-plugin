@@ -1,7 +1,11 @@
 <div class="product-grid">
     {% for product in products %}
         <div class="product-card" style="margin-bottom: 64px;">
-            <h4>{{ product.title }}</h4>
+            <h4>
+                <a href="{{ 'productsingle'|page({ slug: product.slug }) }}">
+                    {{ product.title }}
+                </a>
+            </h4>
             <small>{{ product.brand.title }}</small>
 
             {% if product.discount_price and product.discount_price < product.base_price %}

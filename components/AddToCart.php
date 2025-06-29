@@ -1,6 +1,7 @@
 <?php namespace Tb\Catalog\Components;
 
 use Cms\Classes\ComponentBase;
+use October\Rain\Exception\ApplicationException;
 use Tb\Catalog\Services\CartManager;
 use Winter\Storm\Support\Facades\Flash;
 use Winter\Storm\Support\Facades\Input;
@@ -38,6 +39,10 @@ class AddToCart extends ComponentBase
     {
         $variantId = Input::get($this->property('variantIdParam'));
         $quantity  = (int) Input::get('quantity', 1);
+
+        if (empty($variantId)) {
+            throw new ApplicationException('Please select a variant before adding this item to your cart.');
+        }
 
         $cart = new CartManager();
         $item = $cart->addItem($variantId, $quantity);

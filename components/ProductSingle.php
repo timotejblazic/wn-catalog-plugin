@@ -8,7 +8,7 @@ class ProductSingle extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'ProductSingle Component',
+            'name'        => 'Product Single',
             'description' => 'Display all the details of the product...'
         ];
     }

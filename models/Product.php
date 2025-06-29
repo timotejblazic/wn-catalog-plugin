@@ -82,9 +82,9 @@ class Product extends Model
         }
 
         if ($this->discount_type === 'fixed') {
-            return number_format($this->discount_value, 2) . '€ OFF';
+            return "- " . number_format($this->discount_value, 2) . ' €';
         }
 
-        return intval($this->discount_value) . '% OFF';
+        return "- " . intval($this->discount_value) . ' %';
     }
 }

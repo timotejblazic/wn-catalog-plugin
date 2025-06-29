@@ -1,35 +1,56 @@
-<form class="product-filters">
-    <select data-request="onFilter" data-track-input name="category" class="form-control">
-        <option value="">All Categories</option>
-        {% for cat in categories %}
-            <option value="{{ cat.slug }}"
-                    {{ filterParams.category == cat.slug ? 'selected' : '' }}>
-                {{ cat.title }}
-            </option>
-        {% endfor %}
-    </select>
+<div class="product-list">
+    <form class="product-list__filters">
+        <div class="form__item">
+            <label for="category">Category</label>
+            <select data-request="onFilter" data-track-input name="category" id="category">
+                <option value="">All Categories</option>
+                {% for cat in categories %}
+                    <option value="{{ cat.slug }}"
+                            {{ filterParams.category == cat.slug ? 'selected' : '' }}>
+                        {{ cat.title }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
 
-    <select data-request="onFilter" data-track-input name="brand" class="form-control">
-        <option value="">All Brands</option>
-        {% for br in brands %}
-            <option value="{{ br.slug }}"
-                    {{ filterParams.brand == br.slug ? 'selected' : '' }}>
-                {{ br.title }}
-            </option>
-        {% endfor %}
-    </select>
+        <div class="form__item">
+            <label for="brand">Brand</label>
+            <select data-request="onFilter" data-track-input name="brand" id="brand">
+                <option value="">All Brands</option>
+                {% for brand in brands %}
+                    <option value="{{ brand.slug }}"
+                            {{ filterParams.brand == brand.slug ? 'selected' : '' }}>
+                        {{ brand.title }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
 
-    <input data-request="onFilter" data-track-input class="form-control" type="number" name="price_min" placeholder="Min" value="{{ filterParams.priceMin }}">
-    <input data-request="onFilter" data-track-input class="form-control" type="number" name="price_max" placeholder="Max" value="{{ filterParams.priceMax }}">
+        <div class="form__item">
+            <label for="price_min">Min. price</label>
+            <input data-request="onFilter" data-track-input type="number" name="price_min" id="price_min"
+                   placeholder="Min" value="{{ filterParams.priceMin }}">
+        </div>
 
-    <select data-request="onFilter" data-track-input name="sort" class="form-control">
-        <option value="newest"   {{ filterParams.sort=='newest'   ? 'selected':'' }}>Newest</option>
-        <option value="price_asc"  {{ filterParams.sort=='price_asc'? 'selected':'' }}>Price ↑</option>
-        <option value="price_desc" {{ filterParams.sort=='price_desc'?'selected':'' }}>Price ↓</option>
-    </select>
-</form>
+        <div class="form__item">
+            <label for="price_max">Max. price</label>
+            <input data-request="onFilter" data-track-input type="number" name="price_max" id="price_max"
+                   placeholder="Max" value="{{ filterParams.priceMax }}">
+        </div>
 
-<!-- AJAX‐loaded product grid -->
-<div id="product-list">
-    {% partial '@_products' %}
+        <div class="form__item">
+            <label for="sort">Order by:</label>
+            <select data-request="onFilter" data-track-input name="sort" id="sort">
+                <option value="newest" {{ filterParams.sort=='newest'   ? 'selected':'' }}>Newest</option>
+                <option value="price_asc" {{ filterParams.sort=='price_asc'? 'selected':'' }}>Price ↑</option>
+                <option value="price_desc" {{ filterParams.sort=='price_desc'?'selected':'' }}>Price ↓</option>
+            </select>
+        </div>
+    </form>
+
+    <!-- AJAX‐loaded product grid -->
+    <div id="product-list">
+        {% partial '@_products' %}
+    </div>
 </div>
+

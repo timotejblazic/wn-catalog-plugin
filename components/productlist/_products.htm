@@ -1,34 +1,52 @@
-<div class="product-grid">
+<div class="product-list__products">
     {% for product in products %}
-        <div class="product-card" style="margin-bottom: 64px;">
-            <h4>
-                <a href="{{ 'productsingle'|page({ slug: product.slug }) }}">
+        <div class="product">
+            <a class="product__overlay" href="{{ 'productsingle'|page({ slug: product.slug }) }}">
+                <span class="sr-only">{{ product.title }}</span>
+            </a>
+
+            <div class="product__media">
+                <picture class="product__media__picture">
+                    <img class="product__media__image" src="{{ product.pictures | media }}" alt="{{ product.title }}">
+                </picture>
+            </div>
+
+            <div class="product__content">
+                <div class="product__brand">
+                    {{ product.brand.title }}
+                </div>
+
+                <div class="product__title">
                     {{ product.title }}
-                </a>
-            </h4>
-            <small>{{ product.brand.title }}</small>
+                </div>
 
-            {% if product.discount_price and product.discount_price < product.base_price %}
-                <p>
-                    <span class="sale-price">{{ product.discount_price }}€</span>
-                    <s>{{ product.base_price }}€</s>
-                </p>
-            {% else %}
-                <p>{{ product.base_price }}€</p>
-            {% endif %}
+                <div class="product__prices">
+                    {% if product.discount_price and product.discount_price < product.base_price %}
+                        <span class="product__prices__item product__prices__item--current">{{ product.discount_price }}€</span>
+                        <s class="product__prices__item product__prices__item--full">{{ product.base_price }}€</s>
+                    {% else %}
+                        <span class="product__prices__item product__prices__item--current">{{ product.base_price }}€</span>
+                    {% endif %}
+                </div>
+            </div>
 
-            <small>CATEGORIES:</small>
-            <ul>
-                {% for category in product.categories %}
-                    <li>{{ category.title }}</li>
-                {% endfor %}
-            </ul>
+
+
+
+{#            <small>CATEGORIES:</small>#}
+{#            <ul>#}
+{#                {% for category in product.categories %}#}
+{#                    <li>{{ category.title }}</li>#}
+{#                {% endfor %}#}
+{#            </ul>#}
         </div>
     {% else %}
-        <p>No products found matching your filters.</p>
+        <div class="product-list__empty">
+            <p>No products found matching your filters.</p>
+        </div>
     {% endfor %}
 </div>
 
-<div class="pagination">
+<div class="product-list__pagination">
     {{ products.render() | raw }}
 </div>

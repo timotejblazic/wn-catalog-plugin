@@ -1,5 +1,5 @@
 <div class="product-list">
-    <form class="product-list__filters">
+    {{ form_open({ class: 'product-list__filters' }) }}
         <div class="form__item">
             <label for="category">Category</label>
             <select data-request="onFilter" data-track-input name="category" id="category">
@@ -46,7 +46,7 @@
                 <option value="price_desc" {{ filterParams.sort=='price_desc'?'selected':'' }}>Price ↓</option>
             </select>
         </div>
-    </form>
+    {{ form_close() }}
 
     <!-- AJAX‐loaded product grid -->
     <div id="product-list">

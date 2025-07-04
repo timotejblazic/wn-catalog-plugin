@@ -1,61 +1,110 @@
-<div class="order-detail">
-    <h2>Order #{{ order.id }}</h2>
-    <p><strong>Date:</strong> {{ order.created_at|date('Y-m-d H:i') }}</p>
-    <p><strong>Status:</strong> {{ order.status.name }}</p>
-    <p><strong>Payment:</strong> {{ order.paymentStatus.name }}</p>
-    <p><strong>Coupon:</strong> {{ order.coupon.code }} - <strong>{{ order.coupon.value }}€</strong></p>
-    {% if order.deliveryMethod %}
-        <p>
+<div class="order-details">
+    <div class="order-details__general">
+        <h2>Order #{{ order.id }}</h2>
+
+        <div class="order-details__general__date">
+            <strong>Date:</strong> {{ order.created_at|date('d. m. Y H:i') }}
+        </div>
+
+        <div class="order-details__general__status order-details__general__status--general">
+            <strong>Status:</strong> {{ order.status.name }}
+        </div>
+
+        <div class="order-details__general__status order-details__general__status--payment">
+            <strong>Payment:</strong> {{ order.paymentStatus.name }}
+        </div>
+
+        {% if order.coupon %}
+            <div class="order-details__general__coupon">
+                <strong>Coupon:</strong> {{ order.coupon.code }} - <strong>{{ order.coupon.value }}€</strong>
+            </div>
+        {% endif %}
+
+        <div class="order-details__general__delivery">
             <strong>Shipping Method:</strong>
-            {{ order.deliveryMethod.name }} —
-            €{{ order.shipping_cost|number_format(2,'.',',') }}
-        </p>
-    {% endif %}
+            {{ order.deliveryMethod.name }}
+            ({{ order.shipping_cost|number_format(2,'.',',') }} €)
+        </div>
+    </div>
 
-    <h3>Shipping Address</h3>
-    <address>
-        {% for key, line in order.shipping_address %}
-            {{ line }}<br>
-        {% endfor %}
-    </address>
 
-    <h3>Billing Address</h3>
-    <address>
-        {% for key, line in order.billing_address %}
-            {{ line }}<br>
-        {% endfor %}
-    </address>
+    <div class="order-details__address">
+        <div class="order-details__address__shipping">
+            <h3>Shipping Address</h3>
+            <div>
+                {% for key, line in order.shipping_address %}
+                    {{ line }}<br>
+                {% endfor %}
+            </div>
+        </div>
 
-    <h3>Items</h3>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Product</th>
-            <th>Variant</th>
-            <th>Qty</th>
-            <th>Unit Price</th>
-            <th>Unit Promo Price</th>
-            <th>Line Total</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for item in order.items %}
-            <tr>
-                <td>{{ item.variant.product.title }}</td>
-                <td>{{ item.variant.title }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>{{ item.unit_price|number_format(2,'.',',') }}€</td>
-                <td>{{ item.variant.discount_price ? item.variant.discount_price|number_format(2,'.',',') ~ '€' : '/' }}</td>
-                <td>{{ item.variant.discount_price ? (item.variant.discount_price * item.quantity)|number_format(2,'.',',') : (item.unit_price * item.quantity)|number_format(2,'.',',') }}€</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="order-details__address__billing">
+            <h3>Billing Address</h3>
+            <div>
+                {% for key, line in order.billing_address %}
+                    {{ line }}<br>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
-    <h3>Totals</h3>
-    <ul>
-        <li><strong>Total: {{ order.total_amount|number_format(2,'.',',') }}€</strong></li>
-    </ul>
 
-    <p><a href="{{ 'my-orders'|page }}">« Back to My Orders</a></p>
+    <div class="order-details__items">
+        <h3>Items</h3>
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Unit Price</th>
+                        <th>Line Total</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in order.items %}
+                        <tr>
+                            <td>
+                                <div class="order-details__item">
+                                    <div class="order-details__item__media">
+                                        <picture class="order-details__item__media__picture">
+                                            <img class="order-details__item__media__image" src="{{ item.variant.product.pictures | media }}" alt="{{ item.variant.product.title }}">
+                                        </picture>
+                                    </div>
+
+                                    <div class="order-details__item__content">
+                                        <div class="order-details__item__title">{{ item.variant.product.title }}</div>
+                                        <div class="order-details__item__variant">{{ item.variant.title }}</div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>{{ item.quantity }}</td>
+
+                            <td>
+                                {% if item.variant.discount_price %}
+                                    {{ item.variant.discount_price|number_format(2,'.',',') ~ ' €' }}
+
+                                    <s>{{ item.unit_price|number_format(2,'.',',') }} €</s>
+                                {% else %}
+                                    {{ item.unit_price|number_format(2,'.',',') }} €
+                                {% endif %}
+                            </td>
+
+                            <td>{{ item.variant.discount_price ? (item.variant.discount_price * item.quantity)|number_format(2,'.',',') : (item.unit_price * item.quantity)|number_format(2,'.',',') }} €</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="order-details__total">
+        <strong>Total: </strong><span>{{ order.total_amount|number_format(2,'.',',') }} €</span>
+    </div>
+
+    <div>
+        <a class="button" href="{{ 'my-orders'|page }}">« Back to My Orders</a>
+    </div>
 </div>

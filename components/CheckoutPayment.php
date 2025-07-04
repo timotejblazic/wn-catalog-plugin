@@ -119,7 +119,7 @@ class CheckoutPayment extends ComponentBase
         $method = post('payment_method');
         $init = (new PaymentManager())->initiate($method, $order);
 
-        // $cart->clear();
+         $cart->clear();
 
         return Redirect::to($init['redirectUrl']);
     }

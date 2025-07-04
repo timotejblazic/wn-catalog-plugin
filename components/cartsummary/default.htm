@@ -1,7 +1,15 @@
 <div class="basket-summary">
-    <h4>Your Cart</h4>
+    <div class="basket-summary__header">
+        <h3 class="basket-summary__header__title">Your Cart</h3>
+    </div>
 
-    <div id="js-basket-summary">
+    <div id="js-basket-summary" class="basket-summary__inner">
         {% partial '@_summary' %}
+    </div>
+
+    <div class="basket-summary__bottom">
+        <button class="button--secondary">Continue shopping</button>
+
+        <a class="button" href="/cart">View Cart</a>
     </div>
 </div>

@@ -1,4 +1,4 @@
-<form data-request="onAddToCart" data-request-flash>
+{{ form_ajax('onAddToCart', { flash: 'true' }) }}
     <input type="hidden" name="{{ variantId }}" value="{{ variant.id }}" />
 
     <label>
@@ -7,4 +7,4 @@
     </label>
 
     <button type="submit">Add to Cart</button>
-</form>
+{{ form_close() }}

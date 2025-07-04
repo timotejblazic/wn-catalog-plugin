@@ -1,69 +1,100 @@
-<div class="checkout-payment">
+<div class="checkout">
     {% if cartItems.count %}
-        <h3>Products</h3>
-        <ul>
-            {% for item in cartItems %}
-                <li>
-                    <div>{{ item.variant.product.title }} ({{ item.variant.title }}) x {{ item.quantity }}</div>
-                    <div>
-                        {% if item.variant.discount_price %}
-                            <s>{{ (item.unit_price * item.quantity)|number_format(2, '.', ',') }} €</s>
-                            <span>{{ (item.variant.discount_price * item.quantity)|number_format(2, '.', ',') }} €</span>
-                        {% else %}
-                            <span>{{ (item.unit_price * item.quantity)|number_format(2, '.', ',') }} €</span>
-                        {% endif %}
+        <div class="checkout__inner">
+            <div class="checkout__form">
+                <h2>Checkout</h2>
+
+                {{ form_ajax('onPlaceOrder', { flash: 'true' }) }}
+                    <div class="checkout__form__group checkout__form__group--email">
+                        <h4>E-mail</h4>
+                        <input type="text" name="shipping[email]" placeholder="E-mail">
                     </div>
 
-                </li>
-            {% endfor %}
-        </ul>
+                    <div class="checkout__form__group checkout__form__group--shipping">
+                        <h4>Shipping Information</h4>
+                        <input type="text" name="shipping[name]" placeholder="Name">
+                        <input type="text" name="shipping[street]" placeholder="Street">
+                        <input type="text" name="shipping[city]" placeholder="City">
+                        <input type="text" name="shipping[zip]" placeholder="ZIP">
+                        <input type="text" name="shipping[country]" placeholder="Country">
+                    </div>
 
-        <div id="js-summary-container">
-            {% partial '@_summary' %}
+                    <div class="checkout__form__group checkout__form__group--billing">
+                        <h4>Billing Information</h4>
+                        <input type="text" name="billing[name]" placeholder="Name">
+                        <input type="text" name="billing[street]" placeholder="Street">
+                        <input type="text" name="billing[city]" placeholder="City">
+                        <input type="text" name="billing[zip]" placeholder="ZIP">
+                        <input type="text" name="billing[country]" placeholder="Country">
+                    </div>
+
+                    <div class="checkout__form__group checkout__form__group--delivery">
+                        <h4>Delivery Method</h4>
+                        <select name="delivery_method_id" data-request="onUpdateSummary">
+                            {% for dm in deliveryMethods %}
+                                <option value="{{ dm.id }}">{{ dm.name }} —
+                                    €{{ dm.cost|number_format(2,'.',',') }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="checkout__form__group checkout__form__group--payment">
+                        <h4>Payment Method</h4>
+                        <select name="payment_method">
+                            {% for method in paymentMethods %}
+                                <option value="{{ method.type }}">{{ method.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="checkout__form__group checkout__form__group--coupon">
+                        <h4>Have a coupon?</h4>
+                        <input data-request="onUpdateSummary" data-track-input type="text" name="coupon_code" placeholder="Enter coupon code">
+                    </div>
+
+                    <button type="submit" class="button--primary">Proceed to Payment</button>
+                {{ form_close() }}
+            </div>
+
+            <div class="checkout__info">
+
+                <div class="checkout__info__products">
+                    {% for item in cartItems %}
+                        <div class="checkout__info__product">
+                            <div class="checkout__info__product__media">
+                                <picture class="checkout__info__product__media__picture">
+                                    <img class="checkout__info__product__media__image" src="{{ item.variant.product.pictures | media }}" alt="{{ item.variant.product.title }}">
+                                </picture>
+                            </div>
+
+                            <div class="checkout__info__product__content">
+                                <div class="checkout__info__product__title">
+                                    {{ item.quantity }} x {{ item.variant.product.title }}
+                                </div>
+
+                                <div class="checkout__info__product__price">
+                                    {% if item.variant.discount_price %}
+                                        {{ (item.variant.discount_price * item.quantity)|number_format(2, '.', ',') }} €
+
+                                        <s>{{ (item.unit_price * item.quantity)|number_format(2, '.', ',') }} €</s>
+                                    {% else %}
+                                        {{ (item.unit_price * item.quantity)|number_format(2, '.', ',') }} €
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="checkout__info__summary" id="js-summary-container">
+                    {% partial '@_summary' %}
+                </div>
+            </div>
         </div>
-
-        <form id="checkout-form" data-request="onPlaceOrder" data-request-flash>
-            <br>
-            <h4>Shipping Information</h4>
-            <input type="text" name="shipping[name]" placeholder="Name">
-            <input type="text" name="shipping[street]" placeholder="Street">
-            <input type="text" name="shipping[city]" placeholder="City">
-            <input type="text" name="shipping[zip]" placeholder="ZIP">
-            <input type="text" name="shipping[country]" placeholder="Country">
-
-            <h4>Billing Information</h4>
-            <input type="text" name="billing[name]" placeholder="Name">
-            <input type="text" name="billing[street]" placeholder="Street">
-            <input type="text" name="billing[city]" placeholder="City">
-            <input type="text" name="billing[zip]" placeholder="ZIP">
-            <input type="text" name="billing[country]" placeholder="Country">
-
-            <br><br>
-            <h4>Delivery Method</h4>
-            <select name="delivery_method_id" data-request="onUpdateSummary">
-                {% for dm in deliveryMethods %}
-                    <option value="{{ dm.id }}">{{ dm.name }} —
-                        €{{ dm.cost|number_format(2,'.',',') }}
-                    </option>
-                {% endfor %}
-            </select>
-
-            <br><br>
-            <h4>Payment Method</h4>
-            <select name="payment_method">
-                {% for method in paymentMethods %}
-                    <option value="{{ method.type }}">{{ method.name }}</option>
-                {% endfor %}
-            </select>
-
-            <br><br>
-            <h4>Have a coupon?</h4>
-            <input data-request="onUpdateSummary" data-track-input type="text" name="coupon_code" placeholder="Enter coupon code">
-
-            <br><br>
-            <button type="submit" class="btn btn-primary">Proceed to Payment</button>
-        </form>
     {% else %}
-        <p>Your cart is empty. <a href="{{ 'products'|page }}">Continue Shopping</a></p>
+        <div class="checkout__empty">
+            <p>Your cart is empty. <a href="{{ 'home'|page }}">Continue Shopping</a></p>
+        </div>
     {% endif %}
 </div>

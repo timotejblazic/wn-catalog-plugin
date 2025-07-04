@@ -30,7 +30,7 @@ class DeliveryMethod extends Model
 
     public function calculateCost($orderTotalAfterDiscount)
     {
-        if ($this->free_over_amount !== null && $orderTotalAfterDiscount >= $this->free_over_amount) {
+        if ($this->free_over_amount !== null && $this->free_over_amount > 0 && $orderTotalAfterDiscount >= $this->free_over_amount) {
             return 0.0;
         }
 

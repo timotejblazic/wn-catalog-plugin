@@ -38,7 +38,7 @@ class AddToCart extends ComponentBase
     public function onAddToCart()
     {
         $variantId = Input::get($this->property('variantIdParam'));
-        $quantity  = (int) Input::get('quantity', 1);
+        $quantity = (int)Input::get('quantity', 1);
 
         if (empty($variantId)) {
             throw new ApplicationException('Please select a variant before adding this item to your cart.');
@@ -47,11 +47,16 @@ class AddToCart extends ComponentBase
         $cart = new CartManager();
         $item = $cart->addItem($variantId, $quantity);
 
+        $this->page['cartItems'] = $cart->getItems();
+        $this->page['cartTotal'] = $cart->getTotal();
+
         Flash::success('Added to cart');
 
-        $redirect = trim($this->property('redirectToCart'));
-        if ($redirect) {
-            return Redirect::to($redirect);
-        }
+
+
+//        $redirect = trim($this->property('redirectToCart'));
+//        if ($redirect) {
+//            return Redirect::to($redirect);
+//        }
     }
 }

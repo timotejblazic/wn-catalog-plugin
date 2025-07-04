@@ -1,54 +1,16 @@
-<div class="cart-page">
-    <h2>Your Shopping Cart</h2>
+<div class="basket">
+    <h2 class="basket__title">Your Shopping Cart</h2>
 
     {% if cartItems.count %}
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Product</th>
-                <th>Variant</th>
-                <th>Unit Price</th>
-                <th>Quantity</th>
-                <th>Line Total</th>
-                <th>Remove</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for item in cartItems %}
-                <tr>
-                    <td>{{ item.variant.product.title }}</td>
-                    <td>{{ item.variant.title }}</td>
-                    <td>{{ item.unit_price|number_format(2, '.', ',') }} €</td>
-                    <td>
-                        <form data-request="onUpdateCart" data-request-flash class="cart-update-form">
-                            <input data-request="onUpdateCart" data-track-input type="number" name="quantity" value="{{ item.quantity }}" min="1" />
-                            <input type="hidden" name="itemId" value="{{ item.id }}" />
-                            <button type="submit" class="btn">Update</button>
-                        </form>
-                    </td>
-                    <td>{{ (item.unit_price * item.quantity)|number_format(2, '.', ',') }} €</td>
-                    <td>
-                        <button data-request="onRemoveItem"
-                                data-request-data="itemId: {{ item.id }}"
-                                data-request-confirm="Are you sure?"
-                                class="btn btn-danger">
-                            ×
-                        </button>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        {% partial '@_summary' %}
 
-        <p class="cart-total">
-            <strong>Total:</strong> {{ cartTotal|number_format(2, '.', ',') }} €
-        </p>
-
-        <p>
-            <a href="/checkout" class="btn btn-primary">Proceed to Checkout</a>
-        </p>
+        <div class="basket__checkout">
+            <a href="/checkout" class="button--primary">Proceed to Checkout</a>
+        </div>
     {% else %}
-        <p>Your cart is empty.</p>
-        <p><a href="{{ 'products'|page }}">Continue Shopping</a></p>
+        <div class="basket__empty">
+            <div class="basket__empty__info">Your cart is empty.</div>
+            <a class="button--primary" href="{{ 'home'|page }}">Continue Shopping</a>
+        </div>
     {% endif %}
 </div>

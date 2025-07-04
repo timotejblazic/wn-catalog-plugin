@@ -6,7 +6,9 @@
                 <img class="product-single__media__image" src="{{ product.pictures | media }}" alt="{{ product.title }}">
             </picture>
 
-            <span class="badge">{{ product.discount_label }}</span>
+            {% if product.discount_label %}
+                <span class="badge">{{ product.discount_label }}</span>
+            {% endif %}
         </div>
 
         <div class="product-single__content">
@@ -20,11 +22,7 @@
 
             <div class="product-single__checkout">
                 {% if product.variants.count %}
-                    <form class="product-single__variants"
-                          data-request="onAddToCart"
-                          data-request-update="'cartSummary::_summary': '#js-basket-summary'"
-                          data-request-flash
-                    >
+                    {{ form_ajax('onAddToCart', { update: { 'cartSummary::_summary': '#js-basket-summary' }, flash: 'true', class: 'product-single__variants' }) }}
                         <div class="product-single__variant__title">Choose variant:</div>
 
                         <div class="product-single__variants__items" id="variant-items">
@@ -67,7 +65,7 @@
                             <input type="number" name="quantity" value="1" min="1" />
                             <button class="button" type="submit">Add to Cart</button>
                         </div>
-                    </form>
+                    {{ form_close() }}
                 {% endif %}
             </div>
         </div>

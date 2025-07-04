@@ -1,0 +1,80 @@
+<div id="js-basket-summary">
+    <div class="basket__items">
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Line Total</th>
+                    <th>Remove</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for item in cartItems %}
+                    <tr>
+                        <td>
+                            <div class="basket__item">
+                                <div class="basket__item__media">
+                                    <picture class="basket__item__media__picture">
+                                        <img class="basket__item__media__image" src="{{ item.variant.product.pictures | media }}" alt="{{ item.variant.product.title }}">
+                                    </picture>
+                                </div>
+
+                                <div class="basket__item__content">
+                                    <div class="basket__item__title">{{ item.variant.product.title }}</div>
+                                    <div class="basket__item__variant">{{ item.variant.title }}</div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+
+                            {% if item.variant.discount_price %}
+                                {{ (item.variant.discount_price)|number_format(2, '.', ',') }} €
+
+                                <s>{{ (item.unit_price)|number_format(2, '.', ',') }} €</s>
+                            {% else %}
+                                {{ (item.unit_price)|number_format(2, '.', ',') }} €
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {{ form_ajax('onUpdateCart', { flash: 'true' }) }}
+                                <input data-request="onUpdateCart" data-track-input type="number" name="quantity" value="{{ item.quantity }}" min="1" />
+                                <input type="hidden" name="itemId" value="{{ item.id }}" />
+                                <button type="submit" class="btn">Update</button>
+                            {{ form_close() }}
+                        </td>
+
+                        <td>
+                            {% if item.variant.discount_price %}
+                                {{ (item.variant.discount_price * item.quantity)|number_format(2, '.', ',') }} €
+
+                                <s>{{ (item.unit_price * item.quantity)|number_format(2, '.', ',') }} €</s>
+                            {% else %}
+                                {{ (item.unit_price * item.quantity)|number_format(2, '.', ',') }} €
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <button data-request="onRemoveItem"
+                                    data-request-data="itemId: {{ item.id }}"
+                                    data-request-confirm="Are you sure?"
+                                    class="basket__item__remove button">
+                                X
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="basket__total">
+        <strong>Total:</strong> {{ cartTotal|number_format(2, '.', ',') }} €
+    </div>
+</div>

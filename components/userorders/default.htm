@@ -1,34 +1,37 @@
-<div class="my-orders">
-    {% if not user %}
-        <p>Please <a href="{{ 'login'|page }}">log in</a> to see your orders.</p>
-    {% elseif not orders.count %}
-        <p>You have not placed any orders yet.</p>
+<div class="orders">
+    <h2>My orders</h2>
+    {% if not orders.count %}
+        <div class="orders__empty">
+            <p>You have not placed any orders yet.</p>
+        </div>
     {% else %}
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Order #</th>
-                <th>Date</th>
-                <th>Order status</th>
-                <th>Payment status</th>
-                <th>Total</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for order in orders %}
+        <div class="table-container">
+            <table class="table">
+                <thead>
                 <tr>
-                    <td>{{ order.id }}</td>
-                    <td>{{ order.created_at|date('Y-m-d H:i') }}</td>
-                    <td>{{ order.status.name }}</td>
-                    <td>{{ order.paymentStatus.name }}</td>
-                    <td>€{{ order.total_amount|number_format(2,'.',',') }}</td>
-                    <td>
-                        <a href="{{ 'order-detail'|page({ id: order.id }) }}">View details</a>
-                    </td>
+                    <th>Order #</th>
+                    <th>Date</th>
+                    <th>Order status</th>
+                    <th>Payment status</th>
+                    <th>Total</th>
+                    <th></th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.created_at|date('d. m. Y H:i') }}</td>
+                        <td>{{ order.status.name }}</td>
+                        <td>{{ order.paymentStatus.name }}</td>
+                        <td>€{{ order.total_amount|number_format(2,'.',',') }}</td>
+                        <td>
+                            <a class="button" href="{{ 'order-details'|page({ id: order.id }) }}">View details</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% endif %}
 </div>

@@ -30,7 +30,7 @@ class CartPage extends ComponentBase
         $cart = new CartManager();
         $cart->updateItem($itemId, $quantity);
 
-        return Redirect::refresh();
+        return $this->renderCartPartial();
     }
 
     public function onRemoveItem()
@@ -40,7 +40,19 @@ class CartPage extends ComponentBase
         $cart = new CartManager();
         $cart->removeItem($itemId);
 
-        return Redirect::refresh();
+        return $this->renderCartPartial();
+    }
+
+    protected function renderCartPartial()
+    {
+        $cart = new CartManager();
+
+        $this->page['cartItems'] = $cart->getItems();
+        $this->page['cartTotal'] = $cart->getTotal();
+
+        return [
+            '#js-basket-summary' => $this->renderPartial('@_summary'),
+        ];
     }
 }
 

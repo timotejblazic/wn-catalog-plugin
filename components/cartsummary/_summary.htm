@@ -1,17 +1,34 @@
 {% if cartItems.count %}
-    <ul>
+    <div class="basket-summary__items">
+
         {% for item in cartItems %}
-            <li>
-                {{ item.variant.product.title }}
-                ({{ item.variant.title }})
-                x {{ item.quantity }} =
-                {{ (item.unit_price * item.quantity)|number_format(2, '.', ',') }}
-            </li>
+            <div class="basket-summary__item">
+                <div class="basket-summary__item__media">
+                    <picture class="basket-summary__item__media__picture">
+                        <img class="basket-summary__item__media__image" src="{{ item.variant.product.pictures | media }}" alt="{{ item.variant.product.title }}">
+                    </picture>
+                </div>
+
+                <div class="basket-summary__item__content">
+                    <div class="basket-summary__item__title">
+                        {{ item.quantity }} x {{ item.variant.product.title }}
+                    </div>
+
+                    <div class="basket-summary__item__price">
+                        {{ (item.unit_price * item.quantity)|number_format(2, '.', ',') }} €
+                    </div>
+                </div>
+
+            </div>
         {% endfor %}
-    </ul>
-    <p><strong>Total:</strong> {{ cartTotal|number_format(2, '.', ',') }}</p>
-    <p><a href="/cart">View Cart</a></p>
-    <p><a href="{{ url().previous() }}">Go back</a></p>
+
+    </div>
+
+    <div class="basket-summary__total">
+        <strong>Total:</strong> {{ cartTotal|number_format(2, '.', ',') }} €
+    </div>
 {% else %}
-    <p>Your cart is empty</p>
+    <div class="basket-summary__empty">
+        <p>Your cart is empty</p>
+    </div>
 {% endif %}

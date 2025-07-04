@@ -25,7 +25,7 @@ class UserOrders extends ComponentBase
         $user = Auth::getUser();
 
         if (!$user) {
-            return Redirect::to('/login');
+            return Redirect::to('/account');
         }
 
         $this->page['user'] = Auth::getUser();

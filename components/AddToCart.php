@@ -52,8 +52,6 @@ class AddToCart extends ComponentBase
 
         Flash::success('Added to cart');
 
-
-
 //        $redirect = trim($this->property('redirectToCart'));
 //        if ($redirect) {
 //            return Redirect::to($redirect);

@@ -22,7 +22,7 @@
 
             <div class="product-single__checkout">
                 {% if product.variants.count %}
-                    {{ form_ajax('onAddToCart', { update: { 'cartSummary::_summary': '#js-basket-summary' }, flash: 'true', class: 'product-single__variants' }) }}
+                    {{ form_ajax('onAddToCart', { update: { 'cartSummary::_summary': '#js-basket-summary' }, flash: 'true', class: 'product-single__variants', id: 'add-to-cart-form' }) }}
                         <div class="product-single__variant__title">Choose variant:</div>
 
                         <div class="product-single__variants__items" id="variant-items">
